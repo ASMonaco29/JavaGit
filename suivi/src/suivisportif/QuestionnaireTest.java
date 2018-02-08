@@ -167,9 +167,18 @@ public class QuestionnaireTest {
     assertEquals("Date changée", true, f.equals(q.getDateF()));
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void testGetMessageFin() {
-    fail("Not yet implemented");
+    Date d = new Date(2000-1900, 01, 21);
+    
+    Date f = new Date(2001-1900, 01, 21);
+    
+    Questionnaire q = new Questionnaire(d, f);
+    
+    assertEquals("Message de fin pas encore defini", true, q.getMessageFin().equals(null));
+    String mf = "Merci beaucoup";
+    
   }
 
   @Test
