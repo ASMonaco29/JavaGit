@@ -102,9 +102,28 @@ public class QuestionnaireTest {
     assertFalse("Date non conforme.", d.equals(q.getDateD()) == false);
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void testSetDateD() {
-    fail("Not yet implemented");
+    Date d = new Date(2000-1900, 01, 21);
+    
+    Date f = new Date(2001-1900, 01, 21);
+    
+    Questionnaire q = new Questionnaire(d, f);
+    
+    SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");  
+    String strDate = formatter.format(q.getDateD());  
+    System.out.println("DateD (init) : " + strDate);
+    
+    d.setDate(15);
+    q.setDateD(d);
+    
+    formatter = new SimpleDateFormat("dd MMMM yyyy");  
+    strDate = formatter.format(q.getDateD());  
+    System.out.println("DateD (end) : " + strDate);
+
+
+    assertEquals("Date changée", true, d.equals(q.getDateD()));
   }
 
   @Test
@@ -121,12 +140,31 @@ public class QuestionnaireTest {
     String strDate = formatter.format(q.getDateF());  
     System.out.println("Date Format with dd MMMM yyyy : " + strDate);
     
-    assertFalse("Date non conforme.", d.equals(q.getDateF()) == false);
+    assertFalse("Date non conforme.", f.equals(q.getDateF()) == false);
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void testSetDateF() {
-    fail("Not yet implemented");
+    Date d = new Date(2000-1900, 01, 21);
+    
+    Date f = new Date(2001-1900, 01, 21);
+    
+    Questionnaire q = new Questionnaire(d, f);
+    
+    SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");  
+    String strDate = formatter.format(q.getDateF());  
+    System.out.println("DateF (init) : " + strDate);
+    
+    f.setMonth(8);
+    q.setDateD(d);
+    
+    formatter = new SimpleDateFormat("dd MMMM yyyy");  
+    strDate = formatter.format(q.getDateF());  
+    System.out.println("DateF (end) : " + strDate);
+
+
+    assertEquals("Date changée", true, f.equals(q.getDateF()));
   }
 
   @Test
