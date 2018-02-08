@@ -109,7 +109,19 @@ public class QuestionnaireTest {
 
   @Test
   public void testGetDateF() {
-    fail("Not yet implemented");
+    @SuppressWarnings("deprecation")
+    Date d = new Date(2001 - 1900, 1, 21);
+    
+    @SuppressWarnings("deprecation")
+    Date f = new Date(2002 - 1900, 1, 21);
+    
+    Questionnaire q = new Questionnaire(d, f);
+    
+    SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy");  
+    String strDate = formatter.format(q.getDateF());  
+    System.out.println("Date Format with dd MMMM yyyy : " + strDate);
+    
+    assertFalse("Date non conforme.", d.equals(q.getDateF()) == false);
   }
 
   @Test
