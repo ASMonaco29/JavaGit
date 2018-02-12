@@ -3,6 +3,7 @@ package suivisportif;
 import java.sql.Date;
 import java.util.ArrayList;
 
+
 public class Questionnaire {
   private String titre;
   private String sstitre;
@@ -84,5 +85,25 @@ public class Questionnaire {
     if (!this.quListe.add(e)) {
       System.out.println("Erreur lors de l'ajout de la question");
     }
+  }
+  
+  /**Supprime une question de la liste de questions du questionnaire.
+   * 
+   * @param index : l'indice de la question à supprimer
+   */
+  public void removeQuestion(int index) {
+    if (index < 0 || index >= this.quListe.size()) {
+      System.out.println("Erreur index invalide");
+      return;
+    }
+    Question q = this.quListe.get(index);
+    if (!this.quListe.remove(q)) {
+      System.out.println("Erreur lors de la suppression de la question");
+    }
+  }
+  
+  public void modifQuestion(int index, boolean rd) {
+    Question quest = this.quListe.get(index);
+    this.quListe.set(index, quest);
   }
 }
