@@ -19,6 +19,9 @@ public class Questionnaire {
     this.dateD = dateD;
     this.dateF = dateF;
     this.quListe = new ArrayList<Question>();
+    this.titre = new String();
+    this.sstitre = new String();
+    this.messageFin = new String();
   }
 
   public String getTitre() {

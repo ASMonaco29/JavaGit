@@ -28,8 +28,9 @@ public class QuestionnaireTest {
     Questionnaire q = new Questionnaire(d, f);
     
     String t = new String();
+    t = q.getTitre();
     
-    assertTrue("Titre non trouvé", t.equals(q.getTitre()) == false);
+    assertTrue("Titre non trouvé", t.equals("Coucou") == false);
     
     q.setTitre("Coucou");
     t = q.getTitre();
