@@ -102,8 +102,41 @@ public class Questionnaire {
     }
   }
   
-  public void modifQuestion(int index, boolean rd) {
+  /**Modifie la réponse par defaut d'une question
+   * 
+   * @param index : indice de la question à modifier
+   * @param rd : nouvelle réponse par défaut
+   */
+  public void modifQuestionRD(int index, boolean rd) {
     Question quest = this.quListe.get(index);
+    quest.setChoixDeflt(rd);
     this.quListe.set(index, quest);
+  }
+  
+  /**Modifie le titre d'une question
+   * 
+   * @param index : indice de la question à modifier
+   * @param t : nouveau titre de la question
+   */
+  public void modifQuestionT(int index, String t) {
+    Question quest = this.quListe.get(index);
+    quest.setQuestion(t);
+    this.quListe.set(index, quest);
+  }
+  
+  /**Déplace une question dans la liste de question (echange de place deux questions)
+   * 
+   * @param i1 : indice de la première question
+   * @param i2 : indice de la deuxième question
+   */
+  public void switchQuestion(int i1, int i2) {
+    if ((i1 < 0 || i1 >= this.quListe.size()) || (i2 < 0 || i2 >= this.quListe.size())) {
+      System.out.println("Erreur index invalide");
+      return;
+    }
+    Question q1 = this.quListe.get(i1);
+    Question q2 = this.quListe.get(i2);
+    this.quListe.set(i1, q2);
+    this.quListe.set(i2, q1);
   }
 }
