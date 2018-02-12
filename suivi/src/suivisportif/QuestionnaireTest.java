@@ -29,7 +29,7 @@ public class QuestionnaireTest {
     
     String t = new String();
     
-    assertTrue("Titre non trouvé", t.equals(q.getTitre()) == true);
+    assertTrue("Titre non trouvé", t.equals(q.getTitre()) == false);
     
     q.setTitre("Coucou");
     t = q.getTitre();
@@ -63,19 +63,18 @@ public class QuestionnaireTest {
     
     String t = new String();
     
-    assertTrue("Titre non trouvé", t.equals(q.getSstitre()) == true);
+    assertTrue("Titre non trouvé", t.equals(q.getSstitre()) == false);
     
     q.setSstitre("Coucou");
     t = q.getSstitre();
     assertEquals("Titre trouvé", true, t.equals("Coucou"));
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void testSetSstitre() {
-    @SuppressWarnings("deprecation")
     Date d = new Date(2000, 01, 21);
     
-    @SuppressWarnings("deprecation")
     Date f = new Date(2001, 01, 21);
     
     Questionnaire q = new Questionnaire(d, f);
@@ -126,12 +125,11 @@ public class QuestionnaireTest {
     assertEquals("Date changée", true, d.equals(q.getDateD()));
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void testGetDateF() {
-    @SuppressWarnings("deprecation")
     Date d = new Date(2001 - 1900, 1, 21);
     
-    @SuppressWarnings("deprecation")
     Date f = new Date(2002 - 1900, 1, 21);
     
     Questionnaire q = new Questionnaire(d, f);
@@ -176,15 +174,30 @@ public class QuestionnaireTest {
     
     Questionnaire q = new Questionnaire(d, f);
     
-    assertEquals("Message de fin pas encore defini", true, q.getMessageFin().equals(null));
-    String mf = "Merci beaucoup";
+    String mf = new String();
+
+    q.setMessageFin("Au revoir");
+    
+    assertTrue("Message de fin pas encore defini", q.getMessageFin().equals(mf) == false);
+    mf = "Merci beaucoup";
     q.setMessageFin(mf);
-    assertEquals("Message de fin pas encore defini", true, q.getMessageFin().equals(mf));
+    assertTrue("Message de fin pas encore defini", q.getMessageFin().equals(mf) == true);
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void testSetMessageFin() {
-    fail("Not yet implemented");
+    Date d = new Date(2000, 01, 21);
+    
+    Date f = new Date(2001, 01, 21);
+    
+    Questionnaire q = new Questionnaire(d, f);
+
+    String tres = q.getMessageFin();
+    assertTrue("Titre non trouvé", tres.equals("Coucou") == false);
+    q.setMessageFin("Coucou");
+    tres = q.getMessageFin();
+    assertEquals("Titre trouvé", true, tres.equals("Coucou"));
   }
 
   @Test
