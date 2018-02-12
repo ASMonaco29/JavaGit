@@ -105,9 +105,9 @@ public class QuestionnaireTest {
   @SuppressWarnings("deprecation")
   @Test
   public void testSetDateD() {
-    Date d = new Date(2000-1900, 01, 21);
+    Date d = new Date(2000 - 1900, 01, 21);
     
-    Date f = new Date(2001-1900, 01, 21);
+    Date f = new Date(2001 - 1900, 01, 21);
     
     Questionnaire q = new Questionnaire(d, f);
     
@@ -170,15 +170,16 @@ public class QuestionnaireTest {
   @SuppressWarnings("deprecation")
   @Test
   public void testGetMessageFin() {
-    Date d = new Date(2000-1900, 01, 21);
+    Date d = new Date(2000 - 1900, 01, 21);
     
-    Date f = new Date(2001-1900, 01, 21);
+    Date f = new Date(2001 - 1900, 01, 21);
     
     Questionnaire q = new Questionnaire(d, f);
     
     assertEquals("Message de fin pas encore defini", true, q.getMessageFin().equals(null));
     String mf = "Merci beaucoup";
-    
+    q.setMessageFin(mf);
+    assertEquals("Message de fin pas encore defini", true, q.getMessageFin().equals(mf));
   }
 
   @Test
