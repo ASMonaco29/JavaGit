@@ -4,12 +4,12 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class Questionnaire {
-  String titre;
-  String sstitre;
-  Date dateD;
-  Date dateF;
-  String messageFin;
-  ArrayList<Question> quListe;
+  private String titre;
+  private String sstitre;
+  private Date dateD;
+  private Date dateF;
+  private String messageFin;
+  private ArrayList<Question> quListe;
 
   /**public Questionnaire(String titre, Date dateD, Date dateF).
    * Le constructeur de l'objet Questionnaire
