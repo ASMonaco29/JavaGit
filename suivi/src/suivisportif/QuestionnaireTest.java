@@ -146,9 +146,9 @@ public class QuestionnaireTest {
   @SuppressWarnings("deprecation")
   @Test
   public void testSetDateF() {
-    Date d = new Date(2000-1900, 01, 21);
+    Date d = new Date(2000 - 1900, 01, 21);
     
-    Date f = new Date(2001-1900, 01, 21);
+    Date f = new Date(2001 - 1900, 01, 21);
     
     Questionnaire q = new Questionnaire(d, f);
     
