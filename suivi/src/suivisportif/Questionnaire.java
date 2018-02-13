@@ -1,6 +1,6 @@
 package suivisportif;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 
@@ -15,10 +15,10 @@ public class Questionnaire {
   /**public Questionnaire(String titre, Date dateD, Date dateF).
    * Le constructeur de l'objet Questionnaire
    */
-  public Questionnaire(Date dateD, Date dateF) {
+  public Questionnaire(java.util.Date dateD2, java.util.Date dateF2) {
     super();
-    this.dateD = dateD;
-    this.dateF = dateF;
+    this.dateD = dateD2;
+    this.dateF = dateF2;
     this.quListe = new ArrayList<Question>();
     this.titre = new String();
     this.sstitre = new String();

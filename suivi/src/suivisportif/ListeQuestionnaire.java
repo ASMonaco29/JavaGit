@@ -1,7 +1,7 @@
 package suivisportif;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 public class ListeQuestionnaire {
@@ -21,30 +21,47 @@ public class ListeQuestionnaire {
     this.listQ = listQ;
   }
   
+  /**Ajoute un questionnaire.
+   * 
+   * @param titre : titre du question.
+   * @param sstitre : sous titre du question.
+   * @param dateD : date de debut du questionnaire.
+   * @param dateF : date de fin du questionnaire.
+   */
+  @SuppressWarnings("resource")
   public void addQuestionnaire(String titre, String sstitre, Date dateD, Date dateF) {
-    Questionnaire Q = new Questionnaire(dateD, dateF);
-    Q.setTitre(titre);
-    Q.setSstitre(sstitre);
+    Questionnaire quest = new Questionnaire(dateD, dateF);
+    quest.setTitre(titre);
+    quest.setSstitre(sstitre);
     
     Scanner sc = new Scanner(System.in);
     String scanne = "o";
     String rd;
     Question q;
     
-    while(scanne.toUpperCase().equals("O") == true) {
+    while (scanne.toUpperCase().equals("O") == true) {
       System.out.println("Saisissez l'intitulé de la question : ");
       scanne = sc.nextLine();
       System.out.println("Réponse par défaut [0 = oui / 1 = non] : ");
       rd = sc.nextLine();
       if (Integer.parseInt(rd) == 0) {
         q = new Question(scanne, true);
-      }
-      else {
+      } else {
         q = new Question(scanne, false);
       }
-      Q.addQuestion(q);
+      quest.addQuestion(q);
     }
     
-    this.listQ.add(Q);
+    this.listQ.add(quest);
+  }
+  
+  /**Modifie un Questionnaire.
+   * 
+   * @param quest : questionnaire a modifier
+   */
+  public void modifQuestionnaire(Questionnaire quest) {
+    Date currD = new Date();
+    Date d = quest.getDateD();
+    Date f = quest.getDateF();
   }
 }
