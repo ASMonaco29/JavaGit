@@ -44,5 +44,7 @@ public class ListeQuestionnaire {
       }
       Q.addQuestion(q);
     }
+    
+    this.listQ.add(Q);
   }
 }
