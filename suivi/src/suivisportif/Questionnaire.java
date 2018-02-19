@@ -76,8 +76,8 @@ public class Questionnaire {
   /** public void addQuestion(Question e).
    * <b>Ajoute une question a la liste de questions du questionnaire</b>
    * <p>
-   * La fonction va ajouter la question e passée en argument a la liste question
-   * du questionnaire en utilisant la méthode add de l'objet ArrayList
+   * La fonction va ajouter la question e passï¿½e en argument a la liste question
+   * du questionnaire en utilisant la mï¿½thode add de l'objet ArrayList
    * </p>
    * @param e : La question a ajouter au questionnaire.
    */
@@ -89,7 +89,7 @@ public class Questionnaire {
   
   /**Supprime une question de la liste de questions du questionnaire.
    * 
-   * @param index : l'indice de la question à supprimer
+   * @param index : l'indice de la question ï¿½ supprimer
    */
   public void removeQuestion(int index) {
     if (index < 0 || index >= this.quListe.size()) {
@@ -102,10 +102,10 @@ public class Questionnaire {
     }
   }
   
-  /**Modifie la réponse par defaut d'une question
+  /**Modifie la rï¿½ponse par defaut d'une question
    * 
-   * @param index : indice de la question à modifier
-   * @param rd : nouvelle réponse par défaut
+   * @param index : indice de la question ï¿½ modifier
+   * @param rd : nouvelle rï¿½ponse par dï¿½faut
    */
   public void modifQuestionRD(int index, boolean rd) {
     Question quest = this.quListe.get(index);
@@ -115,7 +115,7 @@ public class Questionnaire {
   
   /**Modifie le titre d'une question
    * 
-   * @param index : indice de la question à modifier
+   * @param index : indice de la question ï¿½ modifier
    * @param t : nouveau titre de la question
    */
   public void modifQuestionT(int index, String t) {
@@ -124,10 +124,10 @@ public class Questionnaire {
     this.quListe.set(index, quest);
   }
   
-  /**Déplace une question dans la liste de question (echange de place deux questions)
+  /**Dï¿½place une question dans la liste de question (echange de place deux questions)
    * 
-   * @param i1 : indice de la première question
-   * @param i2 : indice de la deuxième question
+   * @param i1 : indice de la premiï¿½re question
+   * @param i2 : indice de la deuxiï¿½me question
    */
   public void switchQuestion(int i1, int i2) {
     if ((i1 < 0 || i1 >= this.quListe.size()) || (i2 < 0 || i2 >= this.quListe.size())) {
@@ -138,5 +138,15 @@ public class Questionnaire {
     Question q2 = this.quListe.get(i2);
     this.quListe.set(i1, q2);
     this.quListe.set(i2, q1);
+  }
+
+  @Override
+  public String toString() {
+    String res = "Questionnaire [titre=" + titre + ", sstitre=" + sstitre + ", dateD=" + dateD + ", dateF=" + dateF
+        + ", messageFin=" + messageFin + ", quListe=" ;
+    for(int i = 0; i < quListe.size(); i++) {
+      res += quListe.get(i).toString();
+    }
+    return res + "]";
   }
 }

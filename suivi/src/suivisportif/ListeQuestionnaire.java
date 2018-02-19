@@ -10,7 +10,7 @@ public class ListeQuestionnaire {
 
   public ListeQuestionnaire() {
     super();
-    this.listQ = new ArrayList<Questionnaire>();
+    listQ = new ArrayList<Questionnaire>();
   }
 
   public ArrayList<Questionnaire> getListQ() {
@@ -25,7 +25,7 @@ public class ListeQuestionnaire {
    * 
    * @param titre : titre du question.
    * @param sstitre : sous titre du question.
-   * @param dateD : date de debut du questionnaire.
+   * @param dateD : date de d√©but du questionnaire.
    * @param dateF : date de fin du questionnaire.
    */
   @SuppressWarnings("resource")
@@ -40,9 +40,9 @@ public class ListeQuestionnaire {
     Question q;
     
     while (scanne.toUpperCase().equals("O") == true) {
-      System.out.println("Saisissez l'intitulÈ de la question : ");
+      System.out.println("Saisissez l'intitul√© de la question : ");
       scanne = sc.nextLine();
-      System.out.println("RÈponse par dÈfaut [0 = oui / 1 = non] : ");
+      System.out.println("R√©ponse par d√©faut [0 = oui / 1 = non] : ");
       rd = sc.nextLine();
       if (Integer.parseInt(rd) == 0) {
         q = new Question(scanne, true);
@@ -50,18 +50,40 @@ public class ListeQuestionnaire {
         q = new Question(scanne, false);
       }
       quest.addQuestion(q);
+      System.out.println("Voulez-vous continuer [o/n] :  ");
+      scanne = sc.nextLine();
     }
-    
+
     this.listQ.add(quest);
+    return;
   }
   
   /**Modifie un Questionnaire.
    * 
    * @param quest : questionnaire a modifier
    */
-  public void modifQuestionnaire(Questionnaire quest) {
+  /*
+  public void modifQuestionnaireDate(Questionnaire quest) {
     Date currD = new Date();
     Date d = quest.getDateD();
     Date f = quest.getDateF();
+    Date tmp;
+    Scanner sc = new Scanner(System.in);
+    int j;
+    int m;
+    int a;
+    
+    if (currD.after(d) == true && currD.before(f) == true) {
+      
+    }
+  }*/
+  
+  @SuppressWarnings("deprecation")
+  public static void main(String[] args) {
+    ListeQuestionnaire lQ = new ListeQuestionnaire();
+    lQ.addQuestionnaire("titre","sous titre", new Date(), new Date(2020 - 1900, 3, 8));
+    for(int i = 0; i < lQ.listQ.size(); i++) {
+      System.out.println(lQ.listQ.get(i).toString());
+    }
   }
 }
