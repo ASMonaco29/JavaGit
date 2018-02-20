@@ -21,6 +21,13 @@ public class ListeQuestionnaire {
     this.listQ = listQ;
   }
   
+  
+  /** Test si on peu modifier un questionnaire par rapport a la date courante
+   * et à ses dates de début et de fin.
+   * 
+   * @param quest : le questionnaire a modifier
+   * @return : -2 questionnaire non commencé , -1 questionnaire commencé, 0 questionnaire est fermé.
+   */
   public int testModifQuestionnaire(Questionnaire quest) {
     Date d = quest.getDateD();
     Date f = quest.getDateF();
@@ -35,6 +42,7 @@ public class ListeQuestionnaire {
     return 0;
   }
   
+  
   /**Ajoute/Crée un questionnaire.
    * 
    * @param titre : titre du question.
@@ -44,13 +52,14 @@ public class ListeQuestionnaire {
    * @return 
    */
   @SuppressWarnings("resource")
-  public int addQuestionnaire(String titre, String sstitre, String msgFin, Date dateD, Date dateF, Question... quliste) {
+  public int addQuestionnaire(String titre, String sstitre, String msgFin,
+      Date dateD, Date dateF, Question... quliste) {
     Questionnaire quest = new Questionnaire(dateD, dateF);
     quest.setTitre(titre);
     quest.setSstitre(sstitre);
     quest.setMessageFin(msgFin);
     
-    for(int i = 0; i < quliste.length; i++) {
+    for (int i = 0; i < quliste.length; i++) {
       quest.addQuestion(quliste[i]);
     }
     listQ.add(quest);
@@ -58,12 +67,13 @@ public class ListeQuestionnaire {
   }
   
   public Object addQuestionnaire(String titre, String sstitre, Date dateD, Date dateF) {
-    return addQuestionnaire( titre, sstitre, null, dateD, dateF);
+    return addQuestionnaire(titre, sstitre, null, dateD, dateF);
   }
+  
   
   /**Modifie un Questionnaire.
    * 
-   * @param quest : questionnaire a modifier
+   * @param quest : questionnaire à modifier
    */
   @SuppressWarnings({ "deprecation", "unused", "resource" })
   public void modifQuestionnaireDate(Questionnaire quest) {
@@ -87,12 +97,12 @@ public class ListeQuestionnaire {
       System.out.println("L'année de fin :  ");
       a = sc.nextInt() - 1900;
       f = new Date(a,m,j);
-    }
-    else if (currD.after(d) == true && currD.before(f) == true) {
+    } else if (currD.after(d) == true && currD.before(f) == true) {
       System.out.println("Quelle date voulez-vou modifiez ? [d = debut / f = fin]  ");
       scanne = sc.nextLine();
     }
   }
+  
   
   /** Le main du programme.
    * 
