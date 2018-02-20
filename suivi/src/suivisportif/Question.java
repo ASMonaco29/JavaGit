@@ -38,8 +38,32 @@ public class Question {
 
   @Override
   public String toString() {
-    return "Question [question=" + question + ", choixDeflt=" + choixDeflt + ", choixRep=" + Arrays.toString(choixRep)
-        + "]";
+    return "Question [question=" + question + ", choixDeflt=" + choixDeflt
+        + ", choixRep=" + Arrays.toString(choixRep) + "]";
+  }
+
+  /** Méthode equals pour les questions.
+   * 
+   * @param q : question a tester
+   * @return : true si égal, false sinon
+   */
+  public boolean equals(Question q) {
+    if (!this.question.equals(q.question)) {
+      return false;
+    }
+    if (this.choixDeflt != q.choixDeflt) {
+      return false;
+    }
+    if (this.choixRep.length != q.choixRep.length) {
+      return false;
+    }
+    for (int i = 0; i < this.choixRep.length; i++) {
+      if (this.choixRep[i] != q.choixRep[i]) {
+        return false;
+      }
+    }
+    
+    return true;
   }
 
 }

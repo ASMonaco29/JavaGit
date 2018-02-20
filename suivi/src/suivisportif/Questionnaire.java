@@ -1,7 +1,7 @@
 package suivisportif;
 
-import java.util.Date;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class Questionnaire {
@@ -23,6 +23,24 @@ public class Questionnaire {
     this.titre = new String();
     this.sstitre = new String();
     this.messageFin = new String();
+  }
+
+  /**public Questionnaire(String titre, String sstitre, Date dateD, Date dateF, String messageFin).
+   * 
+   * @param titre : titre du questionnaire
+   * @param sstitre : sous titre du questionnaire
+   * @param dateD : date de début du questionnaire
+   * @param dateF : date de fin du questionnaire
+   * @param messageFin : message de fin du questionnaire
+   */
+  public Questionnaire(String titre, String sstitre, Date dateD, Date dateF, String messageFin) {
+    super();
+    this.titre = titre;
+    this.sstitre = sstitre;
+    this.dateD = dateD;
+    this.dateF = dateF;
+    this.messageFin = messageFin;
+    this.quListe = new ArrayList<Question>();
   }
 
   public String getTitre() {
@@ -82,6 +100,12 @@ public class Questionnaire {
    * @param e : La question a ajouter au questionnaire.
    */
   public void addQuestion(Question e) {
+    for (int i = 0; i < this.quListe.size(); i++) {
+      if (!this.quListe.get(i).equals(e)) {
+        System.out.println("Erreur, question déjà existante dans le questionnaire.");
+        return;
+      }
+    }
     if (!this.quListe.add(e)) {
       System.out.println("Erreur lors de l'ajout de la question");
     }
@@ -102,18 +126,18 @@ public class Questionnaire {
     }
   }
   
-  /**Modifie la r�ponse par defaut d'une question
+  /**Modifie la r�ponse par defaut d'une question.
    * 
    * @param index : indice de la question � modifier
    * @param rd : nouvelle r�ponse par d�faut
    */
-  public void modifQuestionRD(int index, boolean rd) {
+  public void modifQuestionRd(int index, boolean rd) {
     Question quest = this.quListe.get(index);
     quest.setChoixDeflt(rd);
     this.quListe.set(index, quest);
   }
   
-  /**Modifie le titre d'une question
+  /**Modifie le titre d'une question.
    * 
    * @param index : indice de la question � modifier
    * @param t : nouveau titre de la question
@@ -124,7 +148,7 @@ public class Questionnaire {
     this.quListe.set(index, quest);
   }
   
-  /**D�place une question dans la liste de question (echange de place deux questions)
+  /**Déplace une question dans la liste de question (échange de place deux questions).
    * 
    * @param i1 : indice de la premi�re question
    * @param i2 : indice de la deuxi�me question
@@ -142,9 +166,10 @@ public class Questionnaire {
 
   @Override
   public String toString() {
-    String res = "Questionnaire [titre=" + titre + ", sstitre=" + sstitre + ", dateD=" + dateD + ", dateF=" + dateF
-        + ", messageFin=" + messageFin + ", quListe=" ;
-    for(int i = 0; i < quListe.size(); i++) {
+    String res = "Questionnaire [titre=" + titre + ", sstitre=" + sstitre + ","
+        + " dateD=" + dateD + ", dateF=" + dateF
+        + ", messageFin=" + messageFin + ", quListe=";
+    for (int i = 0; i < quListe.size(); i++) {
       res += quListe.get(i).toString();
     }
     return res + "]";
