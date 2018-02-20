@@ -32,7 +32,7 @@ public class ListeQuestionnaire {
    */
   @SuppressWarnings("resource")
   public int addQuestionnaire(String titre, String sstitre, String msgFin,
-      Date dateD, Date dateF, Question... quliste) {
+      Date dateD, Date dateF, Question[] quliste) {
     Questionnaire quest = new Questionnaire(dateD, dateF);
     quest.setTitre(titre);
     quest.setSstitre(sstitre);
@@ -46,7 +46,7 @@ public class ListeQuestionnaire {
   }
   
   public Object addQuestionnaire(String titre, String sstitre, Date dateD, Date dateF) {
-    return addQuestionnaire(titre, sstitre, null, dateD, dateF);
+    return addQuestionnaire(titre, sstitre, null, dateD, dateF, null);
   }
   
   
@@ -145,11 +145,17 @@ public class ListeQuestionnaire {
   @SuppressWarnings("deprecation")
   public static void main(String[] args) {
     ListeQuestionnaire lq = new ListeQuestionnaire();
-    lq.addQuestionnaire("titre","sous titre", new Date(2011 - 1900, 3, 8),
-        new Date(2020 - 1900, 3, 8));
+    Question[] qs = new Question[4];
+    qs[0] = new Question("q0", true);
+    qs[1] = new Question("q1", false);
+    qs[2] = new Question("q2", false);
+    qs[3] = null;
+    lq.addQuestionnaire("titre","sous titre", "msgFin", new Date(2011 - 1900, 3, 8),
+        new Date(2020 - 1900, 3, 8), qs);
     for (int i = 0; i < lq.listQ.size(); i++) {
       System.out.println(lq.listQ.get(i).toString());
     }
     lq.modifQuestionnaire(lq.listQ.get(0));
+    System.out.println(lq.listQ.get(0).toString());
   }
 }

@@ -90,6 +90,7 @@ public class Questionnaire {
   public void setqListe(ArrayList<Question> quListe) {
     this.quListe = quListe;
   }
+  
 
   /** public void addQuestion(Question e).
    * <b>Ajoute une question a la liste de questions du questionnaire</b>
@@ -98,38 +99,51 @@ public class Questionnaire {
    * du questionnaire en utilisant la m�thode add de l'objet ArrayList
    * </p>
    * @param e : La question a ajouter au questionnaire.
+   * 
+   * @return -1 si une erreur, 0 sinon.
    */
-  public void addQuestion(Question e) {
+  public int addQuestion(Question e) {
+    if (e == null) {
+      return -1;
+    }
     for (int i = 0; i < this.quListe.size(); i++) {
-      if (!this.quListe.get(i).equals(e)) {
+      if (this.quListe.get(i).equals(e)) {
         System.out.println("Erreur, question déjà existante dans le questionnaire.");
-        return;
+        return -1;
       }
     }
     if (!this.quListe.add(e)) {
       System.out.println("Erreur lors de l'ajout de la question");
+      return -1;
     }
+    return 0;
   }
+  
   
   /**Supprime une question de la liste de questions du questionnaire.
    * 
-   * @param index : l'indice de la question � supprimer
+   * @param index : l'indice de la question à supprimer
+   * 
+   * @return : -1 si une erreur, ou question inexistante, 0 sinon.
    */
-  public void removeQuestion(int index) {
+  public int removeQuestion(int index) {
     if (index < 0 || index >= this.quListe.size()) {
       System.out.println("Erreur index invalide");
-      return;
+      return -1;
     }
     Question q = this.quListe.get(index);
     if (!this.quListe.remove(q)) {
       System.out.println("Erreur lors de la suppression de la question");
+      return -1;
     }
+    return 0;
   }
   
-  /**Modifie la r�ponse par defaut d'une question.
+  
+  /**Modifie la réponse par défaut d'une question.
    * 
-   * @param index : indice de la question � modifier
-   * @param rd : nouvelle r�ponse par d�faut
+   * @param index : indice de la question à modifier
+   * @param rd : nouvelle réponse par défaut
    */
   public void modifQuestionRd(int index, boolean rd) {
     Question quest = this.quListe.get(index);
@@ -139,29 +153,40 @@ public class Questionnaire {
   
   /**Modifie le titre d'une question.
    * 
-   * @param index : indice de la question � modifier
+   * @param index : indice de la question à modifier
    * @param t : nouveau titre de la question
    */
-  public void modifQuestionT(int index, String t) {
+  public int modifQuestionT(int index, String t) {
+    if (index < 0 || index >= this.quListe.size() || t == null) {
+      return -1;
+    }
     Question quest = this.quListe.get(index);
     quest.setQuestion(t);
+    for (int i = 0; i < this.quListe.size(); i++) {
+      if (this.quListe.get(i).equals(quest)) {
+        System.out.println("Erreur, question déjà existante dans le questionnaire.");
+        return -1;
+      }
+    }
     this.quListe.set(index, quest);
+    return 0;
   }
   
   /**Déplace une question dans la liste de question (échange de place deux questions).
    * 
-   * @param i1 : indice de la premi�re question
-   * @param i2 : indice de la deuxi�me question
+   * @param i1 : indice de la première question
+   * @param i2 : indice de la deuxième question
    */
-  public void switchQuestion(int i1, int i2) {
+  public int switchQuestion(int i1, int i2) {
     if ((i1 < 0 || i1 >= this.quListe.size()) || (i2 < 0 || i2 >= this.quListe.size())) {
       System.out.println("Erreur index invalide");
-      return;
+      return -1;
     }
     Question q1 = this.quListe.get(i1);
     Question q2 = this.quListe.get(i2);
     this.quListe.set(i1, q2);
     this.quListe.set(i2, q1);
+    return 0;
   }
 
   @Override
