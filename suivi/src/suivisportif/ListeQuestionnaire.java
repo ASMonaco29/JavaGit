@@ -26,10 +26,13 @@ public class ListeQuestionnaire {
     Date f = quest.getDateF();
     Date currD = new Date();
     
-    if (d.before(currD) && f.after(currD)) {
+    if (d.before(currD)) {
+      return -2;
+    }
+    if (d.after(currD) && f.before(currD)) {
       return -1;
     }
-    if (d.after(currD) || f.before(currD))
+    return 0;
   }
   
   /**Ajoute/Crée un questionnaire.
@@ -41,33 +44,16 @@ public class ListeQuestionnaire {
    * @return 
    */
   @SuppressWarnings("resource")
-  public int addQuestionnaire(String titre, String sstitre, String msgFin, Date dateD, Date dateF, Question qulist ...) {
+  public int addQuestionnaire(String titre, String sstitre, String msgFin, Date dateD, Date dateF, Question... quliste) {
     Questionnaire quest = new Questionnaire(dateD, dateF);
     quest.setTitre(titre);
     quest.setSstitre(sstitre);
     quest.setMessageFin(msgFin);
     
-    Scanner sc = new Scanner(System.in);
-    String scanne = "o";
-    String rd;
-    Question q;
-    
-    while (scanne.toUpperCase().equals("O") == true) {
-      System.out.println("Saisissez l'intitulé de la question : ");
-      scanne = sc.nextLine();
-      System.out.println("Réponse par défaut [0 = oui / 1 = non] : ");
-      rd = sc.nextLine();
-      if (Integer.parseInt(rd) == 0) {
-        q = new Question(scanne, true);
-      } else {
-        q = new Question(scanne, false);
-      }
-      quest.addQuestion(q);
-      System.out.println("Voulez-vous continuer [o/n] :  ");
-      scanne = sc.nextLine();
+    for(int i = 0; i < quliste.length; i++) {
+      quest.addQuestion(quliste[i]);
     }
-
-    this.listQ.add(quest);
+    listQ.add(quest);
     return 0;
   }
   
