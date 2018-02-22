@@ -145,10 +145,14 @@ public class Questionnaire {
    * @param index : indice de la question à modifier
    * @param rd : nouvelle réponse par défaut
    */
-  public void modifQuestionRd(int index, boolean rd) {
+  public int modifQuestionRd(int index, boolean rd) {
+    if (index < 0 || index >= this.quListe.size()) {
+      return -1;
+    }
     Question quest = this.quListe.get(index);
     quest.setChoixDeflt(rd);
     this.quListe.set(index, quest);
+    return 0;
   }
   
   /**Modifie le titre d'une question.
