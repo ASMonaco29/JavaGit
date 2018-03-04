@@ -138,9 +138,27 @@ public class ListeQuestionnaire {
   }
   
   
+  /** Supprime un questionnaire de la liste.
+   * 
+   * @param q : le questionnaire à supprimer.
+   * @return -1 si l'argument n'est pas valide, le questionnaire n'est pas modifiable
+   *         ou bien si la suppression ne s'est pas bien passée. Sinon renvoie 0.
+   */
+  public int supprQuestionnaire(Questionnaire q) {
+    if (q == null || testModifQuestionnaire(q) == -1) {
+      return -1;
+    }
+    if (!this.listQ.remove(q)) {
+      return -1;
+    }
+    return 0;
+  }
+  
+  
   /** Le main du programme.
    * 
    * @param args : argument.
+   * 
    */
   @SuppressWarnings("deprecation")
   public static void main(String[] args) {
