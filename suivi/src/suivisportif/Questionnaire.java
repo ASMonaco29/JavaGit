@@ -2,6 +2,7 @@ package suivisportif;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
@@ -52,7 +53,16 @@ public class Questionnaire {
   }
 
   public String getTitre() {
-    return this.titre;
+    try {
+      ResultSet res = state.executeQuery("SELECT que_titre "
+          + "FROM t_questionnaire_que"
+          + "WHERE "+sstitre+"= que_sstitre");
+      res.next();
+      return res.getObject("que_titre").toString();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   public void setTitre(String s) {
