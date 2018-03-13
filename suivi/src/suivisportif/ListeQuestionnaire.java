@@ -50,17 +50,11 @@ public class ListeQuestionnaire {
   
   /** Modifie un questionnaire de la liste de questionnaires.
    * 
+   * @param nq : Questionnaire rassemblant les modifications à apporter.
    * @param index : indice du questionnaire à modifier.
-   * @param titre : "nouveau" titre du questionnaire.
-   * @param sstitre : "nouveau" sous-titre du questionnaire.
-   * @param dateD : "nouvelle" date de début du questionnaire.
-   * @param dateF : "nouvelle" date de fin du questionnaire.
-   * @param msgF : "nouveau" message de fin du questionnaire.
-   * @param lq : "nouvelle" liste de questions du questionnaire.
    * @return
    */
-  public int modifQuestionnaire(int index, String titre, String sstitre,
-      Date dateD, Date dateF, String msgF, ArrayList<Question> lq) {
+  public int modifQuestionnaire(Questionnaire nq, int index) {
     if (index < 0 || index >= this.listQ.size()) {
       return -1;
     }
@@ -69,26 +63,26 @@ public class ListeQuestionnaire {
       return -1;
     }
     
-    if (!this.listQ.get(index).getTitre().equals(titre)) {
-      this.listQ.get(index).setTitre(titre);
+    if (!this.listQ.get(index).getTitre().equals(nq.getTitre())) {
+      this.listQ.get(index).setTitre(nq.getTitre());
     }
-    if (!this.listQ.get(index).getSstitre().equals(sstitre)) {
-      this.listQ.get(index).setSstitre(sstitre);
+    if (!this.listQ.get(index).getSstitre().equals(nq.getSstitre())) {
+      this.listQ.get(index).setSstitre(nq.getSstitre());
     }
-    if (!this.listQ.get(index).getDateD().equals(dateD)) {
-      this.listQ.get(index).setDateD(dateD);
+    if (!this.listQ.get(index).getDateD().equals(nq.getDateD())) {
+      this.listQ.get(index).setDateD(nq.getDateD());
     }
-    if (!this.listQ.get(index).getDateF().equals(dateF)) {
-      this.listQ.get(index).setDateF(dateF);
+    if (!this.listQ.get(index).getDateF().equals(nq.getDateF())) {
+      this.listQ.get(index).setDateF(nq.getDateF());
     }
-    if (!this.listQ.get(index).getMessageFin().equals(msgF)) {
-      this.listQ.get(index).setMessageFin(msgF);
+    if (!this.listQ.get(index).getMessageFin().equals(nq.getMessageFin())) {
+      this.listQ.get(index).setMessageFin(nq.getMessageFin());
     }
     
     for (int i = 0; i < this.listQ.get(index).getquListe().size(); i++) {
-      if (!lq.get(i).equals(this.listQ.get(index).getquListe().get(i))) {
-        this.listQ.get(index).getquListe().get(i).setChoixDeflt(lq.get(i).getChoixDeflt());
-        this.listQ.get(index).getquListe().get(i).setQuestion(lq.get(i).getQuestion());
+      if (!nq.getquListe().get(i).equals(this.listQ.get(index).getquListe().get(i))) {
+        this.listQ.get(index).getquListe().get(i).setChoixDeflt(nq.getquListe().get(i).getChoixDeflt());
+        this.listQ.get(index).getquListe().get(i).setQuestion(nq.getquListe().get(i).getQuestion());
       }
     }
     return 0;
