@@ -12,19 +12,6 @@ public class Questionnaire {
   private String messageFin;
   private ArrayList<Question> quListe;
 
-  /**public Questionnaire(String titre, Date dateD, Date dateF).
-   * Le constructeur de l'objet Questionnaire
-   */
-  public Questionnaire(java.util.Date dateD2, java.util.Date dateF2) {
-    super();
-    this.dateD = dateD2;
-    this.dateF = dateF2;
-    this.quListe = new ArrayList<Question>();
-    this.titre = new String();
-    this.sstitre = new String();
-    this.messageFin = new String();
-  }
-
   /**public Questionnaire(String titre, String sstitre, Date dateD, Date dateF, String messageFin).
    * 
    * @param titre : titre du questionnaire

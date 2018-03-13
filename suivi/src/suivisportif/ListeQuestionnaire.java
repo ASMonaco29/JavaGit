@@ -1,5 +1,10 @@
 package suivisportif;
 
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -31,10 +36,7 @@ public class ListeQuestionnaire {
    */
   public int addQuestionnaire(String titre, String sstitre,
       Date dateD, Date dateF, String msgFin, ArrayList<Question> quliste) {
-    Questionnaire quest = new Questionnaire(dateD, dateF);
-    quest.setTitre(titre);
-    quest.setSstitre(sstitre);
-    quest.setMessageFin(msgFin);
+    Questionnaire quest = new Questionnaire(titre, sstitre, dateD, dateF, msgFin);
     
     for (int i = 0; i < quliste.size(); i++) {
       quest.addQuestion(quliste.get(i));
@@ -134,5 +136,43 @@ public class ListeQuestionnaire {
    * @param args : argument.
    * 
    */
-  public static void main(String[] args) {}
+  public static void main(String[] args) {
+    try {
+      Class.forName("org.mariadb.jdbc.Driver");
+      
+      String url = "jdbc:mariadb://localhost/suivi_sportif";
+      String user = "root";
+      String passwd = "";
+      
+      Connection conn = DriverManager.getConnection(url, user, passwd);
+      System.out.println("Connection établie!");
+      
+      //Création d'un objet Statement
+      Statement state = conn.createStatement();
+      //L'objet ResultSet contient le résultat de la requête SQL
+      ResultSet result = state.executeQuery("SELECT * FROM v_peutrepondrea WHERE 1");
+      //On récupère les MetaData
+      ResultSetMetaData resultMeta = result.getMetaData();
+         
+      System.out.println("\n******************************************************************************************************");
+      //On affiche le nom des colonnes
+      for(int i = 1; i <= resultMeta.getColumnCount(); i++)
+        System.out.print("\t" + resultMeta.getColumnName(i) + "\t *");
+         
+      System.out.println("\n******************************************************************************************************");
+         
+      while(result.next()){         
+        for(int i = 1; i <= resultMeta.getColumnCount(); i++)
+          System.out.print("\t" + result.getObject(i).toString() + "\t |");
+            
+        System.out.println("\n---------------------------------------------------------------------------------------------------");
+
+      }
+
+      result.close();
+      state.close();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 }
