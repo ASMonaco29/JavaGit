@@ -32,14 +32,14 @@ public class ListeQuestionnaire {
    */
   @SuppressWarnings("resource")
   public int addQuestionnaire(String titre, String sstitre, String msgFin,
-      Date dateD, Date dateF, Question[] quliste) {
+      Date dateD, Date dateF, ArrayList<Question> quliste) {
     Questionnaire quest = new Questionnaire(dateD, dateF);
     quest.setTitre(titre);
     quest.setSstitre(sstitre);
     quest.setMessageFin(msgFin);
     
-    for (int i = 0; i < quliste.length; i++) {
-      quest.addQuestion(quliste[i]);
+    for (int i = 0; i < quliste.size(); i++) {
+      quest.addQuestion(quliste.get(i));
     }
     listQ.add(quest);
     return 0;
@@ -50,12 +50,20 @@ public class ListeQuestionnaire {
   }
   
   
-  /**Modifie un Questionnaire.
+  /** Modifie un questionnaire de la liste de questionnaires.
    * 
-   * @param quest : questionnaire à modifier
+   * @param index : indice du questionnaire à modifier.
+   * @param titre : "nouveau" titre du questionnaire.
+   * @param sstitre : "nouveau" sous-titre du questionnaire.
+   * @param dateD : "nouvelle" date de début du questionnaire.
+   * @param dateF : "nouvelle" date de fin du questionnaire.
+   * @param msgF : "nouveau" message de fin du questionnaire.
+   * @param lq : "nouvelle" liste de questions du questionnaire.
+   * @return
    */
   @SuppressWarnings("resource")
-  public int modifQuestionnaire(int index, String titre, String sstitre, Date dateD, Date dateF, String msgF, ArrayList<Question> lq) {
+  public int modifQuestionnaire(int index, String titre, String sstitre,
+      Date dateD, Date dateF, String msgF, ArrayList<Question> lq) {
     if (index < 0 || index >= this.listQ.size()) {
       return -1;
     }
@@ -81,7 +89,7 @@ public class ListeQuestionnaire {
     }
     
     for (int i = 0; i < this.listQ.get(index).getquListe().size(); i++) {
-      if(!lq.get(i).equals(this.listQ.get(index).getquListe().get(i))) {
+      if (!lq.get(i).equals(this.listQ.get(index).getquListe().get(i))) {
         this.listQ.get(index).getquListe().get(i).setChoixDeflt(lq.get(i).getChoixDeflt());
         this.listQ.get(index).getquListe().get(i).setQuestion(lq.get(i).getQuestion());
       }
@@ -124,6 +132,15 @@ public class ListeQuestionnaire {
       return -1;
     }
     return 0;
+  }
+  
+  
+  /** Donne le nombre de questionnaires.
+   * 
+   * @return : la taille de la liste de questionnaires.
+   */
+  public int getSizeListQ(){
+    return this.listQ.size();
   }
   
   
