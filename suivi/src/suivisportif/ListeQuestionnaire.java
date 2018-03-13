@@ -45,11 +45,7 @@ public class ListeQuestionnaire {
     listQ.add(quest);
     return 0;
   }
-  
-  public Object addQuestionnaire(String titre, String sstitre, Date dateD, Date dateF) {
-    return addQuestionnaire(titre, sstitre, dateD, dateF, null, null);
-  }
-  
+   
   
   /** Modifie un questionnaire de la liste de questionnaires.
    * 
