@@ -78,13 +78,7 @@ public class ListeQuestionnaire {
     if (!this.listQ.get(index).getMessageFin().equals(nq.getMessageFin())) {
       this.listQ.get(index).setMessageFin(nq.getMessageFin());
     }
-    
-    for (int i = 0; i < this.listQ.get(index).getquListe().size(); i++) {
-      if (!nq.getquListe().get(i).equals(this.listQ.get(index).getquListe().get(i))) {
-        this.listQ.get(index).getquListe().get(i).setChoixDeflt(nq.getquListe().get(i).getChoixDeflt());
-        this.listQ.get(index).getquListe().get(i).setQuestion(nq.getquListe().get(i).getQuestion());
-      }
-    }
+    this.listQ.get(index).setqListe(nq.getquListe());
     return 0;
   }
   
@@ -130,7 +124,7 @@ public class ListeQuestionnaire {
    * 
    * @return : la taille de la liste de questionnaires.
    */
-  public int getSizeListQ(){
+  public int getSizeListQ() {
     return this.listQ.size();
   }
   
@@ -140,6 +134,5 @@ public class ListeQuestionnaire {
    * @param args : argument.
    * 
    */
-  public static void main(String[] args) {
-  }
+  public static void main(String[] args) {}
 }
