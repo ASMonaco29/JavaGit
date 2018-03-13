@@ -36,11 +36,8 @@ public class ListeQuestionnaire {
    */
   public int addQuestionnaire(String titre, String sstitre,
       Date dateD, Date dateF, String msgFin, ArrayList<Question> quliste) {
-    Questionnaire quest = new Questionnaire(titre, sstitre, dateD, dateF, msgFin);
+    Questionnaire quest = new Questionnaire(titre, sstitre, dateD, dateF, msgFin, quliste);
     
-    for (int i = 0; i < quliste.size(); i++) {
-      quest.addQuestion(quliste.get(i));
-    }
     listQ.add(quest);
     return 0;
   }
