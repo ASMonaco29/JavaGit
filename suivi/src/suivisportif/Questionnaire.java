@@ -1,5 +1,8 @@
 package suivisportif;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,6 +14,12 @@ public class Questionnaire {
   private Date dateF;
   private String messageFin;
   private ArrayList<Question> quListe;
+  
+  private String url = "jdbc:mariadb://localhost/suivi_sportif";
+  private String user = "root";
+  private String passwd = "";
+  private Statement state;
+  private Connection conn;
 
   /**public Questionnaire(String titre, String sstitre, Date dateD, Date dateF, String messageFin).
    * 
@@ -28,6 +37,18 @@ public class Questionnaire {
     this.dateF = dateF;
     this.messageFin = messageFin;
     this.quListe = lq;
+    
+    try {
+      Class.forName("org.mariadb.jdbc.Driver");
+      
+      conn = DriverManager.getConnection(url, user, passwd);
+      
+      //Création d'un objet Statement
+      state = conn.createStatement();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   public String getTitre() {
@@ -182,12 +203,11 @@ public class Questionnaire {
 
   @Override
   public String toString() {
-    String res = "Questionnaire [titre=" + titre + ", sstitre=" + sstitre + ","
-        + " dateD=" + dateD + ", dateF=" + dateF
-        + ", messageFin=" + messageFin + ", quListe=";
+    String res = titre + "\n" + sstitre + "\n" + dateD + "\n" + dateF
+        + "\n" + messageFin + "\n";
     for (int i = 0; i < quListe.size(); i++) {
       res += quListe.get(i).toString();
     }
-    return res + "]";
+    return res ;
   }
 }

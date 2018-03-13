@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,10 +12,26 @@ import java.util.Date;
 public class ListeQuestionnaire {
   
   private ArrayList<Questionnaire> listQ;
+  private String url = "jdbc:mariadb://localhost/suivi_sportif";
+  private String user = "root";
+  private String passwd = "";
+  private Statement state;
+  private Connection conn;
 
   public ListeQuestionnaire() {
     super();
     listQ = new ArrayList<Questionnaire>();
+    try {
+      Class.forName("org.mariadb.jdbc.Driver");
+      
+      conn = DriverManager.getConnection(url, user, passwd);
+      
+      //Création d'un objet Statement
+      state = conn.createStatement();
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
   }
 
   public ArrayList<Questionnaire> getListQ() {
@@ -123,8 +140,20 @@ public class ListeQuestionnaire {
    * 
    * @return : la taille de la liste de questionnaires.
    */
-  public int getSizeListQ() {
-    return this.listQ.size();
+  public long getSizeListQ() {
+    try {
+      //L'objet ResultSet contient le résultat de la requête SQL
+      ResultSet result = state.executeQuery("SELECT COUNT(*) FROM t_questionnaire_que WHERE 1");
+
+      result.next();
+      System.out.println("\tNB questionnaires : "+result.getObject(1));
+      result.close();
+      state.close();
+      return (long) result.getObject(1);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return 0;
   }
   
   
@@ -134,44 +163,7 @@ public class ListeQuestionnaire {
    * 
    */
   public static void main(String[] args) {
-    try {
-      Class.forName("org.mariadb.jdbc.Driver");
-      
-      String url = "jdbc:mariadb://localhost/suivi_sportif";
-      String user = "root";
-      String passwd = "";
-      
-      Connection conn = DriverManager.getConnection(url, user, passwd);
-      System.out.println("Connection établie!");
-      
-      //Création d'un objet Statement
-      Statement state = conn.createStatement();
-      //L'objet ResultSet contient le résultat de la requête SQL
-      ResultSet result = state.executeQuery("SELECT COUNT(*) FROM t_questionnaire_que WHERE 1");
-      //On récupère les MetaData
-      ResultSetMetaData resultMeta = result.getMetaData();
-         
-      System.out.println("\n******************************************************************************************************");
-      //On affiche le nom des colonnes
-      for (int i = 1; i <= resultMeta.getColumnCount(); i++) {
-        System.out.print("\t" + resultMeta.getColumnName(i) + "\t *");
-      }
-         
-      System.out.println("\n******************************************************************************************************");
-         
-      while (result.next()) {         
-        for (int i = 1; i <= resultMeta.getColumnCount(); i++) {
-          System.out.print("\t" + result.getObject(i).toString() + "\t |");
-        }
-            
-        System.out.println("\n---------------------------------------------------------------------------------------------------");
-
-      }
-
-      result.close();
-      state.close();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    ListeQuestionnaire lq = new ListeQuestionnaire();
+    lq.getSizeListQ();
   }
 }
