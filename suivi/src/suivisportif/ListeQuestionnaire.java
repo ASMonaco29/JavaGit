@@ -2,7 +2,6 @@ package suivisportif;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Scanner;
 
 public class ListeQuestionnaire {
   
@@ -30,9 +29,8 @@ public class ListeQuestionnaire {
    * @param dateF : date de fin du questionnaire.
    * @return 
    */
-  @SuppressWarnings("resource")
-  public int addQuestionnaire(String titre, String sstitre, String msgFin,
-      Date dateD, Date dateF, ArrayList<Question> quliste) {
+  public int addQuestionnaire(String titre, String sstitre,
+      Date dateD, Date dateF, String msgFin, ArrayList<Question> quliste) {
     Questionnaire quest = new Questionnaire(dateD, dateF);
     quest.setTitre(titre);
     quest.setSstitre(sstitre);
@@ -46,7 +44,7 @@ public class ListeQuestionnaire {
   }
   
   public Object addQuestionnaire(String titre, String sstitre, Date dateD, Date dateF) {
-    return addQuestionnaire(titre, sstitre, null, dateD, dateF, null);
+    return addQuestionnaire(titre, sstitre, dateD, dateF, null, null);
   }
   
   
@@ -61,7 +59,6 @@ public class ListeQuestionnaire {
    * @param lq : "nouvelle" liste de questions du questionnaire.
    * @return
    */
-  @SuppressWarnings("resource")
   public int modifQuestionnaire(int index, String titre, String sstitre,
       Date dateD, Date dateF, String msgF, ArrayList<Question> lq) {
     if (index < 0 || index >= this.listQ.size()) {
@@ -149,7 +146,6 @@ public class ListeQuestionnaire {
    * @param args : argument.
    * 
    */
-  @SuppressWarnings("deprecation")
   public static void main(String[] args) {
   }
 }
