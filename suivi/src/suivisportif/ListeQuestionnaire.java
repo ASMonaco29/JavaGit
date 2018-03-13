@@ -36,6 +36,10 @@ public class ListeQuestionnaire {
    */
   public int addQuestionnaire(String titre, String sstitre,
       Date dateD, Date dateF, String msgFin, ArrayList<Question> quliste) {
+    if (titre == null || sstitre == null || dateD == null || dateF == null ||
+        msgFin == null || quliste == null) {
+      return -1;
+    }
     Questionnaire quest = new Questionnaire(titre, sstitre, dateD, dateF, msgFin, quliste);
     
     listQ.add(quest);
@@ -147,7 +151,7 @@ public class ListeQuestionnaire {
       //Création d'un objet Statement
       Statement state = conn.createStatement();
       //L'objet ResultSet contient le résultat de la requête SQL
-      ResultSet result = state.executeQuery("SELECT * FROM v_peutrepondrea WHERE 1");
+      ResultSet result = state.executeQuery("SELECT COUNT(*) FROM t_questionnaire_que WHERE 1");
       //On récupère les MetaData
       ResultSetMetaData resultMeta = result.getMetaData();
          
