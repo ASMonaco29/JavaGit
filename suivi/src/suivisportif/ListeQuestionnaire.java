@@ -55,31 +55,38 @@ public class ListeQuestionnaire {
    * @param quest : questionnaire à modifier
    */
   @SuppressWarnings("resource")
-  public void modifQuestionnaire(Questionnaire quest) {
-    int statut = testModifQuestionnaire(quest);
-    Scanner sc = new Scanner(System.in);
-    int choix;
-    
-    switch (statut) {
-      case -2:
-        System.out.println("Le questionnaire peut être modifié");
-        break;
-      case -1:
-        System.out.println("Le questionnaire ne peut être modifié, il est ouvert.");
-        break;
-      case 0:
-        System.out.println("Le questionnaire est fermé, il peut être modifié.");
-        System.out.println("Que voulez-vous modifier?");
-        System.out.println("\t1. Les dates");
-        choix = sc.nextInt();
-        if (choix == 1) {
-          modifDates(quest);
-        }
-        break;
-
-      default:
-        break;
+  public int modifQuestionnaire(int index, String titre, String sstitre, Date dateD, Date dateF, String msgF, ArrayList<Question> lq) {
+    if (index < 0 || index >= this.listQ.size()) {
+      return -1;
     }
+    int statut = testModifQuestionnaire(this.listQ.get(index));
+    if (statut == -1) {
+      return -1;
+    }
+    
+    if (!this.listQ.get(index).getTitre().equals(titre)) {
+      this.listQ.get(index).setTitre(titre);
+    }
+    if (!this.listQ.get(index).getSstitre().equals(sstitre)) {
+      this.listQ.get(index).setSstitre(sstitre);
+    }
+    if (!this.listQ.get(index).getDateD().equals(dateD)) {
+      this.listQ.get(index).setDateD(dateD);
+    }
+    if (!this.listQ.get(index).getDateF().equals(dateF)) {
+      this.listQ.get(index).setDateF(dateF);
+    }
+    if (!this.listQ.get(index).getMessageFin().equals(msgF)) {
+      this.listQ.get(index).setMessageFin(msgF);
+    }
+    
+    for (int i = 0; i < this.listQ.get(index).getquListe().size(); i++) {
+      if(!lq.get(i).equals(this.listQ.get(index).getquListe().get(i))) {
+        this.listQ.get(index).getquListe().get(i).setChoixDeflt(lq.get(i).getChoixDeflt());
+        this.listQ.get(index).getquListe().get(i).setQuestion(lq.get(i).getQuestion());
+      }
+    }
+    return 0;
   }
   
   
@@ -100,41 +107,6 @@ public class ListeQuestionnaire {
       return -1;
     }
     return 0;
-  }
-  
-  
-  /** Modifie les dates du questionnaire.
-   * 
-   * @param quest : questionnaire dont les dates vont être modifiées
-   */
-  @SuppressWarnings({ "deprecation", "resource" })
-  public void modifDates(Questionnaire quest) {
-    Scanner sc = new Scanner(System.in);
-    
-    System.out.println("Saisissez l'année de début du questionnaire :  ");
-    int ad = sc.nextInt();
-    System.out.println("Saisissez le mois de début du questionnaire :  ");
-    int md = sc.nextInt();  
-    System.out.println("Saisissez le jour de début du questionnaire :  ");
-    int jd = sc.nextInt();  
-    System.out.println("Saisissez l'année de fin du questionnaire :  ");
-    int af = sc.nextInt();
-    System.out.println("Saisissez le mois de fin du questionnaire :  ");
-    int mf = sc.nextInt();
-    System.out.println("Saisissez le jour de fin du questionnaire :  ");
-    int jf = sc.nextInt();  
-    Date d = new Date(ad - 1900, md, jd);
-    Date f = new Date(af - 1900, mf, jf);
-    
-    if (!d.before(f)) {
-      System.out.println("Erreur, la date de fin est inférieur à la date de début.");
-      modifDates(quest);
-      return;
-    }
-    
-    quest.setDateD(d);
-    quest.setDateF(f);
-    return;
   }
   
   
@@ -162,18 +134,5 @@ public class ListeQuestionnaire {
    */
   @SuppressWarnings("deprecation")
   public static void main(String[] args) {
-    ListeQuestionnaire lq = new ListeQuestionnaire();
-    Question[] qs = new Question[4];
-    qs[0] = new Question("q0", true);
-    qs[1] = new Question("q1", false);
-    qs[2] = new Question("q2", false);
-    qs[3] = null;
-    lq.addQuestionnaire("titre","sous titre", "msgFin", new Date(2011 - 1900, 3, 8),
-        new Date(2020 - 1900, 3, 8), qs);
-    for (int i = 0; i < lq.listQ.size(); i++) {
-      System.out.println(lq.listQ.get(i).toString());
-    }
-    lq.modifQuestionnaire(lq.listQ.get(0));
-    System.out.println(lq.listQ.get(0).toString());
   }
 }
