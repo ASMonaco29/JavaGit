@@ -1,9 +1,5 @@
-package suivisportif;
+package cda;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -15,12 +11,6 @@ public class Questionnaire {
   private Date dateF;
   private String messageFin;
   private ArrayList<Question> quListe;
-  
-  private String url = "jdbc:mariadb://localhost/suivi_sportif";
-  private String user = "root";
-  private String passwd = "";
-  private Statement state;
-  private Connection conn;
 
   /**public Questionnaire(String titre, String sstitre, Date dateD, Date dateF, String messageFin).
    * 
@@ -30,7 +20,8 @@ public class Questionnaire {
    * @param dateF : date de fin du questionnaire
    * @param messageFin : message de fin du questionnaire
    */
-  public Questionnaire(String titre, String sstitre, Date dateD, Date dateF, String messageFin, ArrayList<Question> lq) {
+  public Questionnaire(String titre, String sstitre, Date dateD, Date dateF,
+      String messageFin, ArrayList<Question> lq) {
     super();
     this.titre = titre;
     this.sstitre = sstitre;
@@ -38,31 +29,10 @@ public class Questionnaire {
     this.dateF = dateF;
     this.messageFin = messageFin;
     this.quListe = lq;
-    
-    try {
-      Class.forName("org.mariadb.jdbc.Driver");
-      
-      conn = DriverManager.getConnection(url, user, passwd);
-      
-      //Création d'un objet Statement
-      state = conn.createStatement();
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
   }
 
   public String getTitre() {
-    try {
-      ResultSet res = state.executeQuery("SELECT que_titre "
-          + "FROM t_questionnaire_que"
-          + "WHERE "+sstitre+"= que_sstitre");
-      res.next();
-      return res.getObject("que_titre").toString();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return null;
+    return this.titre;
   }
 
   public void setTitre(String s) {
@@ -213,11 +183,6 @@ public class Questionnaire {
 
   @Override
   public String toString() {
-    String res = titre + "\n" + sstitre + "\n" + dateD + "\n" + dateF
-        + "\n" + messageFin + "\n";
-    for (int i = 0; i < quListe.size(); i++) {
-      res += quListe.get(i).toString();
-    }
-    return res ;
+    return this.titre;
   }
 }

@@ -1,6 +1,4 @@
-package suivisportif;
-
-import java.util.Arrays;
+package cda;
 
 public class Question {
 
@@ -38,8 +36,11 @@ public class Question {
 
   @Override
   public String toString() {
-    return "Question [question=" + question + ", choixDeflt=" + choixDeflt
-        + ", choixRep=" + Arrays.toString(choixRep) + "]";
+    if (this.choixDeflt == true) {
+      return this.question + " : vrai"; 
+    } else {
+      return this.question + " : faux";
+    }
   }
 
   /** Méthode equals pour les questions.

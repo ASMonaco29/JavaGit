@@ -1,37 +1,15 @@
-package suivisportif;
+package cda;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ListeQuestionnaire {
+public class ListeQuestionnaires {
   
   private ArrayList<Questionnaire> listQ;
-  private String url = "jdbc:mariadb://localhost/suivi_sportif";
-  private String user = "root";
-  private String passwd = "";
-  private Statement state;
-  private Connection conn;
 
-  public ListeQuestionnaire() {
+  public ListeQuestionnaires() {
     super();
     listQ = new ArrayList<Questionnaire>();
-    try {
-      Class.forName("org.mariadb.jdbc.Driver");
-      
-      conn = DriverManager.getConnection(url, user, passwd);
-      
-      //Création d'un objet Statement
-      state = conn.createStatement();
-    } catch (Exception e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
   }
 
   public ArrayList<Questionnaire> getListQ() {
@@ -53,8 +31,8 @@ public class ListeQuestionnaire {
    */
   public int addQuestionnaire(String titre, String sstitre,
       Date dateD, Date dateF, String msgFin, ArrayList<Question> quliste) {
-    if (titre == null || sstitre == null || dateD == null || dateF == null ||
-        msgFin == null || quliste == null) {
+    if (titre == null || sstitre == null || dateD == null || dateF == null
+        || msgFin == null || quliste == null) {
       return -1;
     }
     Questionnaire quest = new Questionnaire(titre, sstitre, dateD, dateF, msgFin, quliste);
@@ -62,7 +40,11 @@ public class ListeQuestionnaire {
     listQ.add(quest);
     return 0;
   }
-   
+  
+  public Object addQuestionnaire(String titre, String sstitre, Date dateD, Date dateF) {
+    return addQuestionnaire(titre, sstitre, dateD, dateF, null, null);
+  }
+  
   
   /** Modifie un questionnaire de la liste de questionnaires.
    * 
@@ -140,30 +122,17 @@ public class ListeQuestionnaire {
    * 
    * @return : la taille de la liste de questionnaires.
    */
-  public long getSizeListQ() {
-    try {
-      //L'objet ResultSet contient le résultat de la requête SQL
-      ResultSet result = state.executeQuery("SELECT COUNT(*) FROM t_questionnaire_que WHERE 1");
-
-      result.next();
-      System.out.println("\tNB questionnaires : "+result.getObject(1));
-      result.close();
-      state.close();
-      return (long) result.getObject(1);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return 0;
+  public int getSizeListQ() {
+    return this.listQ.size();
   }
+
   
-  
-  /** Le main du programme.
-   * 
-   * @param args : argument.
+  /** Vide la liste de questionnaires.
    * 
    */
-  public static void main(String[] args) {
-    ListeQuestionnaire lq = new ListeQuestionnaire();
-    lq.getSizeListQ();
+  public void reinitialiser() {
+    this.listQ.clear();
   }
+  
+  
 }
