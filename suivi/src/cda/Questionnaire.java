@@ -5,6 +5,7 @@ import java.util.Date;
 
 
 public class Questionnaire {
+  private int id = 0;
   private String titre;
   private String sstitre;
   private Date dateD;
@@ -29,6 +30,14 @@ public class Questionnaire {
     this.dateF = dateF;
     this.messageFin = messageFin;
     this.quListe = lq;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getTitre() {
@@ -133,7 +142,7 @@ public class Questionnaire {
    * @param index : indice de la question à modifier
    * @param rd : nouvelle réponse par défaut
    */
-  public int modifQuestionRd(int index, boolean rd) {
+  public int modifQuestionRd(int index, String rd) {
     if (index < 0 || index >= this.quListe.size()) {
       return -1;
     }
