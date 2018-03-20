@@ -149,6 +149,20 @@ public class JdbcListeReponse {
     }
     return -1;
   }
+  
+  public void modififerReponsesJDBC(Reponse r) {
+    try {
+      Statement stmt = LaConnection.getInstance().createStatement();
+      stmt.executeUpdate("UPDATE t_reponse_rep SET"
+          + " que_id = " + r.getQuestionnaire().getId()
+          + ", spo_pseudo = " + r.getSportif().getPseudo()
+          + ", rep_daterep = " + r.getDate()
+          + " WHERE rep_id = " + r.getId());
+    } catch (Exception e) {
+      // TODO: handle exception
+      e.printStackTrace();
+    }
+  }
 
   @Override
   public String toString() {
