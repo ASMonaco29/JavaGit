@@ -1,7 +1,5 @@
 package cda;
 
-import java.util.ArrayList;
-
 public class Question {
 
   private int id = 0;

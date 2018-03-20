@@ -267,14 +267,11 @@ public class JdbcListeQuestionnaire {
   }
 
   public void modifierQuestionnaire(Questionnaire q) {
-
-    Questionnaire qAncien = this.lqtnrs.recupererQuestionnaire(q.getId());
-
     if (this.lqtnrs.modifQuestionnaire(q) == 0) {
 
       try {
         Statement stmt = LaConnection.getInstance().createStatement();
-        int rs = stmt.executeUpdate("UPDATE `t_questionnaire_que` "
+        stmt.executeUpdate("UPDATE `t_questionnaire_que` "
             + "SET `que_titre`='" + q.getTitre()
             + "' WHERE `que_id`=" + q.getId() + ";");
 
@@ -285,7 +282,7 @@ public class JdbcListeQuestionnaire {
 
       try {
         Statement stmt = LaConnection.getInstance().createStatement();
-        int rs = stmt.executeUpdate("UPDATE `t_questionnaire_que` "
+        stmt.executeUpdate("UPDATE `t_questionnaire_que` "
             + "SET `que_sstitre`='" + q.getSstitre()
             + "' WHERE `que_id`=" + q.getId() + ";");
 
@@ -296,7 +293,7 @@ public class JdbcListeQuestionnaire {
       java.sql.Date dated = new java.sql.Date(q.getDateD().getTime());
       try {
         Statement stmt = LaConnection.getInstance().createStatement();
-        int rs = stmt.executeUpdate("UPDATE `t_questionnaire_que` "
+        stmt.executeUpdate("UPDATE `t_questionnaire_que` "
             + "SET `que_dateD`= '" + dated
             + "' WHERE `que_id`=" + q.getId() + ";");
 
@@ -307,7 +304,7 @@ public class JdbcListeQuestionnaire {
       java.sql.Date datef = new java.sql.Date(q.getDateF().getTime());
       try {
         Statement stmt = LaConnection.getInstance().createStatement();
-        int rs = stmt.executeUpdate("UPDATE `t_questionnaire_que` "
+        stmt.executeUpdate("UPDATE `t_questionnaire_que` "
             + "SET `que_dateF`='" + datef
             + "' WHERE `que_id`=" + q.getId() + ";");
 
@@ -317,7 +314,7 @@ public class JdbcListeQuestionnaire {
 
       try {
         Statement stmt = LaConnection.getInstance().createStatement();
-        int rs = stmt.executeUpdate("UPDATE `t_questionnaire_que` "
+        stmt.executeUpdate("UPDATE `t_questionnaire_que` "
             + "SET `que_msgfin`='" + q.getMessageFin()
             + "' WHERE `que_id`=" + q.getId() + ";");
 

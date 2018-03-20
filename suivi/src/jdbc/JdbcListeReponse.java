@@ -98,7 +98,6 @@ public class JdbcListeReponse {
 
         if (resultat == 1) {
           ajouterreponse = true;
-          int identifiant = this.retourneReponseJdbc(s,q,date).getId();
           //TODO Recuperer les id des reponsepossible et créer des t_rpc
         }
       } catch (SQLException e) {
