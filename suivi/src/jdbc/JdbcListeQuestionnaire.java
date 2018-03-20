@@ -13,11 +13,13 @@ import cda.Questionnaire;
 public class JdbcListeQuestionnaire {
 
   private ListeQuestionnaires lqtnrs;
+  private ArrayList<Question> lq;
 
 
   public JdbcListeQuestionnaire() {
     super();
     this.lqtnrs = new ListeQuestionnaires();
+    this.lq = new ArrayList<Question>();
   }
 
   public ListeQuestionnaires getLqtnrs() {
@@ -83,6 +85,10 @@ public class JdbcListeQuestionnaire {
     }
   }
 
+  public void initialiserListeQuestionJdbc() {
+    this.lq.clear();
+  }
+  
   public Questionnaire ajouterQuestionnaireJdbc(String titre, String sstitre, Date dateD,
       Date dateF, String messageF, ArrayList<Question> listq) {
 
@@ -324,6 +330,23 @@ public class JdbcListeQuestionnaire {
     }
   }
 
+  public void recupererToutesQuestionsJdbc() {
+    Question q;
+    try {
+      Statement stmt = LaConnection.getInstance().createStatement();
+      ResultSet rsq = stmt.executeQuery("SELECT * FROM t_question_qtn");
+      ResultSet rsr;
+      
+      while(rsq.next()) {
+        rsr = stmt.executeQuery("SELECT * FROM t_listereponses_lrp WHERE qtn_id = "
+            + rsq.getInt("qtn_id"));
+        q.setChoixDeflt(rsq.getBoolean("));
+      }
+    } catch (Exception e) {
+      // TODO: handle exception
+    }
+  }
+  
   public Questionnaire recupererQuestionnaireJdbc(String titre, String sstitre) {
     return this.lqtnrs.retourneQuestionnaire(titre, sstitre);
   }

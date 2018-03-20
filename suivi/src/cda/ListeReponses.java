@@ -51,6 +51,18 @@ public class ListeReponses {
     return r;
   }
 
+  public Reponse retourneReponsesSportif(Sportif s) {
+    Reponse r = null;
+
+    for (Reponse rep : this.reponses ) {
+      if (rep.getSportif().equals(s)) {
+        r = rep;
+      }
+    }
+
+    return r;
+  }
+
   @Override
   public String toString() {
     return "reponses=" + reponses + "";

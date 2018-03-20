@@ -112,6 +112,10 @@ public class JdbcListeReponse {
     return this.lrps.retourneReponse(s,q,date);
   }
 
+  private Reponse retourneReponsesSportifJdbc(Sportif s) {
+    return this.lrps.retourneReponsesSportif(s);
+  }
+
   /**
    * Fonction permettent de supprimer un réponse à la bdd
    */
