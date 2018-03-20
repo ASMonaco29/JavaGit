@@ -14,7 +14,7 @@ public class ListeReponses {
   public int getSizeListR(){
     return this.reponses.size();
   }
-  
+
   public ArrayList<Reponse> getReponses() {
     return reponses;
   }
@@ -22,15 +22,15 @@ public class ListeReponses {
   public void setReponses(ArrayList<Reponse> reponses) {
     this.reponses = reponses;
   }
-  
+
   public void ajouterReponse(Reponse r) {
-      this.reponses.add(r);
+    this.reponses.add(r);
   }
-  
+
   public void supprimerReponse(Reponse r) {
-          this.reponses.remove(r);
+    this.reponses.remove(r);
   }
-  
+
   public void modifierReponse(Reponse r, int indx){
     this.reponses.set(indx, r);
   }
@@ -41,13 +41,13 @@ public class ListeReponses {
 
   public Reponse retourneReponse(Sportif s, Questionnaire q, Date date) {
     Reponse r = null;
-    
+
     for (Reponse rep : this.reponses ) {
       if (rep.getDate().equals(date) && rep.getSportif().equals(s) && rep.getQuestionnaire().equals(q)) {
         r = rep;
       }
     }
-    
+
     return r;
   }
 
@@ -55,5 +55,5 @@ public class ListeReponses {
   public String toString() {
     return "reponses=" + reponses + "";
   }
-  
+
 }

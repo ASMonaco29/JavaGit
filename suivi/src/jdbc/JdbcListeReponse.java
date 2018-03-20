@@ -27,54 +27,54 @@ public class JdbcListeReponse {
   public ListeReponses getLrps() {
     return lrps;
   }
-  
+
   public void initialiserListeReponsesJdbc() {
     this.lrps.reinitialiser();
     this.lspts.initialiserListeSportifsJdbc();
     this.lqtnrs.initialiserListeQuestionnaireJdbc();
-    
+
     //Création d'un objet Statement
     try {
       ResultSet resultat;
       Reponse variable;
       Statement stmt = LaConnection.getInstance().createStatement();
       resultat = stmt.executeQuery("SELECT * FROM `t_reponses_rep` NATURAL JOIN `t_questionnaire_que`;");
-        
+
       while (resultat.next()) {
-          Sportif s = this.lspts.retourneSportifJdbc((String)resultat.getObject("spo_pseudo"));
-          Questionnaire q = this.lqtnrs.recupererQuestionnaireJdbc(
-              (String)resultat.getObject("que_titre"),(String)resultat.getObject("que_sstitre"));
-          Date date = resultat.getDate("rep_daterep");
-          int i = resultat.getInt("rep_id");
-          
-          ArrayList<Boolean> reponses = new ArrayList<Boolean>();
-          ResultSet result;
-          Statement stm = LaConnection.getInstance().createStatement();
-          result = stm.executeQuery("SELECT * FROM `t_reponseschoisies_rpc` NATURAL JOIN "
-              + "`t_listreponses_lrp` WHERE `rep_id` =" + resultat.getInt("rep_id") + ";");
-          
-          while (result.next()) {
-            boolean rep = false;
-            String str = result.getString("lrp_intitule");
-            if( str.equals("oui")) {
-              rep = true;
-            }else {
-              rep = false;
-            }
-            reponses.add(rep);
+        Sportif s = this.lspts.retourneSportifJdbc((String)resultat.getObject("spo_pseudo"));
+        Questionnaire q = this.lqtnrs.recupererQuestionnaireJdbc(
+            (String)resultat.getObject("que_titre"),(String)resultat.getObject("que_sstitre"));
+        Date date = resultat.getDate("rep_daterep");
+        int i = resultat.getInt("rep_id");
+
+        ArrayList<Boolean> reponses = new ArrayList<Boolean>();
+        ResultSet result;
+        Statement stm = LaConnection.getInstance().createStatement();
+        result = stm.executeQuery("SELECT * FROM `t_reponseschoisies_rpc` NATURAL JOIN "
+            + "`t_listreponses_lrp` WHERE `rep_id` =" + resultat.getInt("rep_id") + ";");
+
+        while (result.next()) {
+          boolean rep = false;
+          String str = result.getString("lrp_intitule");
+          if( str.equals("oui")) {
+            rep = true;
+          }else {
+            rep = false;
           }
-          
-          variable = new Reponse(i,date,reponses,s,q);
-          this.lrps.ajouterReponse(variable);
-          
+          reponses.add(rep);
+        }
+
+        variable = new Reponse(i,date,reponses,s,q);
+        this.lrps.ajouterReponse(variable);
+
       }
-        
-        
+
+
     } catch (SQLException e) {
       e.printStackTrace();
     }
   }
-  
+
   /**
    * Fonction permettent d'ajouter une reponse
    * @return
@@ -82,20 +82,20 @@ public class JdbcListeReponse {
   public void ajouterReponseJdbc(Reponse r) {
     this.ajouterReponseJdbc(r.getSportif(), r.getQuestionnaire(), r.getDate(), r.getReponses());
   }
-  
+
   /**
    * Fonction permettent d'ajouter une reponse
    * @return
    */
   public boolean ajouterReponseJdbc(Sportif s, Questionnaire q, java.util.Date date, ArrayList<Boolean> rep) {
     boolean ajouterreponse = false;
-    
+
     if (this.retourneReponseJdbc(s,q,date) == null) {
       try {
         int resultat;
         Statement stmt = LaConnection.getInstance().createStatement();
         resultat = stmt.executeUpdate("INSERT INTO `t_reponses_rep`(`rep_id`, `rep_daterep`, `spo_pseudo`, `que_id`) VALUES ( null," + date + "," + s + "," + q + ")");
-        
+
         if (resultat == 1) {
           ajouterreponse = true;
           int identifiant = this.retourneReponseJdbc(s,q,date).getId();
@@ -105,10 +105,10 @@ public class JdbcListeReponse {
         e.printStackTrace();
       }
     }
-    
+
     return ajouterreponse;
   }
-  
+
   private Reponse retourneReponseJdbc(Sportif s, Questionnaire q, java.util.Date date) {
     return this.lrps.retourneReponse(s,q,date);
   }
@@ -116,14 +116,28 @@ public class JdbcListeReponse {
   /**
    * Fonction permettent de supprimer un réponse à la bdd
    */
-  public void supprimerReponseJdbc() {
-    
+  public void supprimerReponseJdbc(Sportif s, Questionnaire q, java.util.Date date) {
+    Reponse r = retourneReponseJdbc(s, q, date);
+    this.lrps.supprimerReponse(r);
+    try {
+      Statement stmt = LaConnection.getInstance().createStatement();
+      
+    } catch (Exception e) {
+      // TODO: handle exception
+    }
+  }
+
+  /**
+   * Fonction permettent de supprimer un réponse à la bdd
+   */
+  public void supprimerToutesReponsesJdbc() {
+
   }
 
   @Override
   public String toString() {
     return "lrps=" + lrps + ", lspts=" + lspts + ", lqtnrs=" + lqtnrs + "";
   }
-  
-  
+
+
 }

@@ -18,8 +18,8 @@ public class Questionnaire {
     super();
   }
 
-  public Questionnaire(int id, String titre, String sstitre, Date dateD, Date dateF, String messageFin,
-      ArrayList<Question> quListe) {
+  public Questionnaire(int id, String titre, String sstitre, Date dateD, Date dateF,
+      String messageFin, ArrayList<Question> quListe) {
     super();
     this.id = id;
     this.titre = titre;
@@ -159,7 +159,7 @@ public class Questionnaire {
    * @param index : indice de la question à modifier
    * @param rd : nouvelle réponse par défaut
    */
-  public int modifQuestionRd(int index, String rd) {
+  public int modifQuestionRd(int index, boolean rd) {
     if (index < 0 || index >= this.quListe.size()) {
       return -1;
     }

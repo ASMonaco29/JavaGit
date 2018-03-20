@@ -53,7 +53,7 @@ public class JdbcListeQuestionnaire {
         
         while (question.next()) {
 
-          qtn = new Question(null, null);
+          qtn = new Question(null, true);
           qtn.setId(question.getInt("qtn_id"));
           qtn.setQuestion((String) question.getString("qtn_intitule"));
           int r = question.getInt("qtn_repdef");
@@ -65,9 +65,12 @@ public class JdbcListeQuestionnaire {
           while (reponse.next()) {
             
             if( r == reponse.getInt("lrp_id")) {
-              qtn.setChoixDeflt(reponse.getString("lrp_intitule"));
+              if(reponse.getString("lrp_intitule").equals("oui")) {
+                qtn.setChoixDeflt(true);
+              } else {
+                qtn.setChoixDeflt(false);
+              }
             }
-            qtn.getChoixRep().add(reponse.getString("lrp_intitule"));
           }
           qtnr.getquListe().add(qtn);
           
@@ -133,6 +136,7 @@ public class JdbcListeQuestionnaire {
     for (Question quest : listq) {
     
      int question;
+     String rd;
      Statement stmt;
      
      try {
@@ -150,11 +154,16 @@ public class JdbcListeQuestionnaire {
            // Création des réponses lrp
            int questid = rs2.getInt("qtn_id");
            
-           for (String s : quest.getChoixRep()) {
+           for (boolean s : quest.getChoixRep()) {
+            if (s) {
+              rd = "oui";
+            } else {
+              rd = "non";
+            }
             Statement stmt3 = LaConnection.getInstance().createStatement();
             int i3 = stmt3.executeUpdate("INSERT INTO `t_listreponses_lrp`"
                 + "(`lrp_intitule`, `qtn_id`) VALUES "
-                + "('" + s
+                + "('" + rd
                 + "'," + questid + ")");
             
             if (i3 == 0) {

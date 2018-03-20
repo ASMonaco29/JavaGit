@@ -6,18 +6,20 @@ public class Question {
 
   private int id = 0;
   private String question;
-  private String choixDeflt;
-  private ArrayList<String> choixRep;
+  private boolean choixDeflt;
+  private boolean[] choixRep;
 
   /**Constructeur de l'objet question.
    * 
    * @param question : chaine de caractere constituant la question
    * @param cd : la r�ponse par defaut
    */
-  public Question(String question, String cd) {
+  public Question(String question, boolean cd) {
     this.question = question;
     this.choixDeflt = cd;
-    this.choixRep = new ArrayList<String>();
+    this.choixRep = new boolean[2];
+    this.choixRep[0] = true;
+    this.choixRep[1] = false;
   }
 
   public int getId() {
@@ -28,11 +30,11 @@ public class Question {
     this.id = id;
   }
 
-  public String getChoixDeflt() {
+  public boolean getChoixDeflt() {
     return choixDeflt;
   }
 
-  public void setChoixDeflt(String choixDeflt) {
+  public void setChoixDeflt(boolean choixDeflt) {
     this.choixDeflt = choixDeflt;
   }
 
@@ -44,11 +46,11 @@ public class Question {
     this.question = question;
   }
 
-  public ArrayList<String> getChoixRep() {
+  public boolean[] getChoixRep() {
     return choixRep;
   }
 
-  public void setChoixRep(ArrayList<String> choixRep) {
+  public void setChoixRep(boolean[] choixRep) {
     this.choixRep = choixRep;
   }
 
@@ -69,11 +71,11 @@ public class Question {
     if (this.choixDeflt != q.choixDeflt) {
       return false;
     }
-    if (this.choixRep.size() != q.choixRep.size()) {
+    if (this.choixRep.length != q.choixRep.length) {
       return false;
     }
-    for (int i = 0; i < this.choixRep.size(); i++) {
-      if (this.choixRep.get(i) != q.choixRep.get(i)) {
+    for (int i = 0; i < this.choixRep.length; i++) {
+      if (this.choixRep[i] != q.choixRep[i]) {
         return false;
       }
     }
