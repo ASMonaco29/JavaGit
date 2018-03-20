@@ -154,7 +154,7 @@ public class JdbcListeQuestionnaire {
   private boolean ajouterListeQuestionJdbc(Questionnaire q, ArrayList<Question> listq) {
     boolean reussie = false;
 
-    for (Question quest : listq) {
+    for (int i = 0; i<listq.size(); i++) {
 
       int question;
       String rd;
@@ -163,20 +163,26 @@ public class JdbcListeQuestionnaire {
       try {
 
         stmt = LaConnection.getInstance().createStatement();
-        question = stmt.executeUpdate("INSERT INTO `t_question_qtn`"
-            + "(`qtn_intitule`, `que_id`) VALUES ('" + quest.getQuestion()
-            + "'," + q.getId() + ");");
+        if (listq.get(i).getChoixDeflt()) {
+          question = stmt.executeUpdate("INSERT INTO `t_question_qtn`"
+              + "(`qtn_intitule`, `que_id`, qtn_repdef) VALUES ('" + listq.get(i).getQuestion()
+              + "'," + q.getId() + ", " + ((i * 2) + 1) + ");");
+        } else {
+          question = stmt.executeUpdate("INSERT INTO `t_question_qtn`"
+              + "(`qtn_intitule`, `que_id`, qtn_repdef) VALUES ('" + listq.get(i).getQuestion()
+              + "'," + q.getId() + ", " + ((i * 2) + 2) + ");");
+        }
 
         if (question == 1) {
           Statement stmt2 = LaConnection.getInstance().createStatement();
           ResultSet rs2 = stmt2.executeQuery("SELECT * FROM `t_question_qtn` "
-              + "WHERE `qtn_intitule` = '" + quest.getQuestion() + "';");
+              + "WHERE `qtn_intitule` = '" + listq.get(i).getQuestion() + "';");
 
           while (rs2.next()) {
             // Création des réponses lrp
             int questid = rs2.getInt("qtn_id");
 
-            for (boolean s : quest.getChoixRep()) {
+            for (boolean s : listq.get(i).getChoixRep()) {
               if (s) {
                 rd = "oui";
               } else {
@@ -196,14 +202,14 @@ public class JdbcListeQuestionnaire {
             Statement stmt4 = LaConnection.getInstance().createStatement();
             int i4 = stmt4.executeUpdate("INSERT INTO `t_listreponses_lrp`"
                 + "(`lrp_intitule`, `qtn_id`) VALUES "
-                + "('" + quest.getChoixDeflt()
+                + "('" + listq.get(i).getChoixDeflt()
                 + "'," + questid + ")");
 
             if (i4 == 1) {
 
               Statement stmt5 = LaConnection.getInstance().createStatement();
               ResultSet rs5 = stmt5.executeQuery("SELECT * FROM `t_listreponses_lrp` "
-                  + "WHERE `lrp_intitule` = '" + quest.getChoixDeflt() 
+                  + "WHERE `lrp_intitule` = '" + listq.get(i).getChoixDeflt() 
                   + "' AND `qtn_id`= " + questid);
 
               if (rs5.first()) {
