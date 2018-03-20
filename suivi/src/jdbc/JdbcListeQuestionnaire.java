@@ -88,7 +88,7 @@ public class JdbcListeQuestionnaire {
   public void initialiserListeQuestionJdbc() {
     this.lq.clear();
   }
-  
+
   public Questionnaire ajouterQuestionnaireJdbc(String titre, String sstitre, Date dateD,
       Date dateF, String messageF, ArrayList<Question> listq) {
 
@@ -331,22 +331,40 @@ public class JdbcListeQuestionnaire {
   }
 
   public void recupererToutesQuestionsJdbc() {
-    Question q;
+    Question qtn;
     try {
       Statement stmt = LaConnection.getInstance().createStatement();
-      ResultSet rsq = stmt.executeQuery("SELECT * FROM t_question_qtn");
-      ResultSet rsr;
-      
-      while(rsq.next()) {
-        rsr = stmt.executeQuery("SELECT * FROM t_listereponses_lrp WHERE qtn_id = "
-            + rsq.getInt("qtn_id"));
-        q.setChoixDeflt(rsq.getBoolean("));
+      ResultSet question;
+      ResultSet reponse;
+      question = stmt.executeQuery("SELECT * FROM `t_question_qtn`");
+
+      while (question.next()) {
+
+        qtn = new Question(null, true);
+        qtn.setId(question.getInt("qtn_id"));
+        qtn.setQuestion((String) question.getString("qtn_intitule"));
+        int r = question.getInt("qtn_repdef");
+        reponse = stmt.executeQuery("SELECT * FROM t_listreponses_lrp WHERE qtn_id = "
+            + question.getInt("qtn_id"));
+
+        while (reponse.next()) {
+
+          if( r == reponse.getInt("lrp_id")) {
+            if(reponse.getString("lrp_intitule").equals("oui")) {
+              qtn.setChoixDeflt(true);
+            } else {
+              qtn.setChoixDeflt(false);
+            }
+          }
+        }
+        this.lq.add(qtn);
       }
     } catch (Exception e) {
       // TODO: handle exception
+      e.printStackTrace();
     }
   }
-  
+
   public Questionnaire recupererQuestionnaireJdbc(String titre, String sstitre) {
     return this.lqtnrs.retourneQuestionnaire(titre, sstitre);
   }

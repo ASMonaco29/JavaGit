@@ -209,8 +209,7 @@ public class Questionnaire {
 
   @Override
   public String toString() {
-    return "Questionnaire [id=" + id + ", titre=" + titre + ", sstitre=" + sstitre + ", dateD=" + dateD + ", dateF="
-        + dateF + ", messageFin=" + messageFin + ", quListe=" + quListe + "]";
+    return this.getTitre() + "   " + this.getSstitre();
   }
 
   
