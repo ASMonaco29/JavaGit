@@ -164,8 +164,8 @@ public class JdbcListeQuestionnaire {
 
         stmt = LaConnection.getInstance().createStatement();
         question = stmt.executeUpdate("INSERT INTO `t_question_qtn`"
-            + "(`qtn_intitule`, `que_id`, `qtn_id`) VALUES ('" + quest.getQuestion()
-            + "'," + q.getId() + "," + null + ");");
+            + "(`qtn_intitule`, `que_id`) VALUES ('" + quest.getQuestion()
+            + "'," + q.getId() + ");");
 
         if (question == 1) {
           Statement stmt2 = LaConnection.getInstance().createStatement();
