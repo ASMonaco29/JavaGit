@@ -402,4 +402,8 @@ public class JdbcListeQuestionnaire {
   public Questionnaire recupererQuestionnaireJdbc(String titre, String sstitre) {
     return this.lqtnrs.retourneQuestionnaire(titre, sstitre);
   }
+  
+  public ArrayList<Question> recupererQuestionJdbc() {
+    return this.lq;
+  }
 }
