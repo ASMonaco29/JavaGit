@@ -34,7 +34,7 @@ public class JdbcListeSport {
       resultat = stmt.executeQuery("SELECT * FROM `t_sports_spt`");
         
       while (resultat.next()) {
-        variable = new Sport((String)resultat.getObject("spt_nom"),(int)resultat.getInt("spt_id"));
+        variable = new Sport((String)resultat.getObject("spt_nom"));
         this.lspts.ajouterSports(variable);
       }
         
@@ -87,7 +87,7 @@ public class JdbcListeSport {
        
         if (resultat == 1) {
           ajoutersport = true;
-          Sport a = new Sport(nom,this.retourneIdSportJdbc(nom));
+          Sport a = new Sport(nom);
           this.lspts.ajouterSports(a);
         }
       } catch (SQLException e) {
@@ -98,6 +98,7 @@ public class JdbcListeSport {
     return ajoutersport;
   }
   
+  @SuppressWarnings("unused")
   private int retourneIdSportJdbc(String nom) {
     int id = -1;
     

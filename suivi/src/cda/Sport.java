@@ -3,12 +3,11 @@ package cda;
 public class Sport {
   
   private String nom;
-  private int id;
+  private int id = 0;
 
-  public Sport(String nom, int id) {
+  public Sport(String nom) {
     super();
     this.nom = nom;
-    this.id = id;
   }
 
   public String getNom() {
