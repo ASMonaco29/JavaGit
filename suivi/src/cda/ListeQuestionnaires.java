@@ -1,5 +1,4 @@
 package cda;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -31,8 +30,8 @@ public class ListeQuestionnaires {
    */
   public int addQuestionnaire(String titre, String sstitre,
       Date dateD, Date dateF, String msgFin, ArrayList<Question> quliste) {
-    if (titre == null || sstitre == null || dateD == null || dateF == null
-        || msgFin == null || quliste == null) {
+    if (titre == null || sstitre == null || dateD == null || dateF == null ||
+        msgFin == null || quliste == null) {
       return -1;
     }
     Questionnaire quest = new Questionnaire(titre, sstitre, dateD, dateF, msgFin, quliste);
@@ -41,8 +40,12 @@ public class ListeQuestionnaires {
     return 0;
   }
   
-  public Object addQuestionnaire(String titre, String sstitre, Date dateD, Date dateF) {
+  public int addQuestionnaire(String titre, String sstitre, Date dateD, Date dateF) {
     return addQuestionnaire(titre, sstitre, dateD, dateF, null, null);
+  }
+  
+  public void addQuestionnaire(Questionnaire q) {
+    listQ.add(q);
   }
   
   
@@ -77,6 +80,32 @@ public class ListeQuestionnaires {
       this.listQ.get(index).setMessageFin(nq.getMessageFin());
     }
     this.listQ.get(index).setqListe(nq.getquListe());
+    return 0;
+  }
+  
+  public int modifQuestionnaire(Questionnaire q) {
+    
+    int statut = testModifQuestionnaire(this.recupererQuestionnaire(q.getId()));
+    if (statut == -1) {
+      return -1;
+    }
+    
+    if (!this.recupererQuestionnaire(q.getId()).getTitre().equals(q.getTitre())) {
+      this.recupererQuestionnaire(q.getId()).setTitre(q.getTitre());
+    }
+    if (!this.recupererQuestionnaire(q.getId()).getSstitre().equals(q.getSstitre())) {
+      this.recupererQuestionnaire(q.getId()).setSstitre(q.getSstitre());
+    }
+    if (!this.recupererQuestionnaire(q.getId()).getDateD().equals(q.getDateD())) {
+      this.recupererQuestionnaire(q.getId()).setDateD(q.getDateD());
+    }
+    if (!this.recupererQuestionnaire(q.getId()).getDateF().equals(q.getDateF())) {
+      this.recupererQuestionnaire(q.getId()).setDateF(q.getDateF());
+    }
+    if (!this.recupererQuestionnaire(q.getId()).getMessageFin().equals(q.getMessageFin())) {
+      this.recupererQuestionnaire(q.getId()).setMessageFin(q.getMessageFin());
+    }
+    this.recupererQuestionnaire(q.getId()).setqListe(q.getquListe());
     return 0;
   }
   
@@ -126,12 +155,33 @@ public class ListeQuestionnaires {
     return this.listQ.size();
   }
 
-  
-  /** Vide la liste de questionnaires.
-   * 
-   */
+  @Override
+  public String toString() {
+    return "" + listQ.toString() + "";
+  }
+
   public void reinitialiser() {
     this.listQ.clear();
+  }
+
+  public Questionnaire retourneQuestionnaire(String titre, String sstitre) {
+    
+    for (Questionnaire q : this.listQ) {
+        if (q.getTitre().equals(titre) && q.getSstitre().equals(sstitre)) {
+          return q;
+        }
+    }
+    
+    return null;
+  }
+
+  public Questionnaire recupererQuestionnaire(int id) {
+    for (Questionnaire q : this.listQ) {
+      if (q.getId() == id) {
+        return q;
+      }
+    }
+    return null;
   }
   
   

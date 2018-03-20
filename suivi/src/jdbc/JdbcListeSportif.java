@@ -113,6 +113,10 @@ public class JdbcListeSportif {
       return -1;
     }
     
+    public int ajouterSportifJdbc( Sportif s ) {
+      return this.ajouterSportifJdbc(s.getPseudo(), s.getNom(), s.getPrenom(), s.getNaissance(), s.getSport().getNom());
+    }
+    
     public Sportif retourneSportifJdbc(String pseudo) {
       return this.lsptfs.retourneSportif(pseudo);
     }
@@ -147,5 +151,36 @@ public class JdbcListeSportif {
     public boolean supprimerSportifJdbc(String pseudo) {
       Sportif a = this.retourneSportifJdbc(pseudo);
       return supprimerSportifJdbc(a);
+    }
+    
+    public boolean modifierSportifJdbc(Sportif sp) {
+      boolean modifiersportif = false;
+      
+      if ( this.lsptfs.retourneSportif(sp.getPseudo()) != null ) {
+        try {
+          int resultat;
+          Statement stmt = LaConnection.getInstance().createStatement();
+          resultat = stmt.executeUpdate("UPDATE `t_sportif_spo` "
+              + "SET `spo_nom`=" + sp.getNom() + ","
+              + "`spo_prenom`=" + sp.getPrenom() + ","
+              + "`spo_dateN`=" + sp.getNaissance() + ","
+              + "`spt_id`=" + sp.getSport()
+              + "WHERE `spo_pseudo` = " + sp.getPseudo() + ";");
+          
+          if (resultat == 1) {
+            modifiersportif = true;
+            this.lsptfs.modifierSportif(sp);
+          }
+        } catch (SQLException e) {
+          e.printStackTrace();
+        }
+      }
+      
+      return modifiersportif;
+    }
+
+    @Override
+    public String toString() {
+      return " lsptfs=" + lsptfs + ", lspt=" + lspt + "";
     }
 }

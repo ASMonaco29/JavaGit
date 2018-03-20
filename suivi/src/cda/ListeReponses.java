@@ -1,5 +1,6 @@
 package cda;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ListeReponses {
 
@@ -36,6 +37,23 @@ public class ListeReponses {
 
   public void reinitialiser() {
     this.reponses.clear();
+  }
+
+  public Reponse retourneReponse(Sportif s, Questionnaire q, Date date) {
+    Reponse r = null;
+    
+    for (Reponse rep : this.reponses ) {
+      if (rep.getDate().equals(date) && rep.getSportif().equals(s) && rep.getQuestionnaire().equals(q)) {
+        r = rep;
+      }
+    }
+    
+    return r;
+  }
+
+  @Override
+  public String toString() {
+    return "reponses=" + reponses + "";
   }
   
 }

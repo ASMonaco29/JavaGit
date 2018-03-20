@@ -34,7 +34,7 @@ public class JdbcListeSport {
       resultat = stmt.executeQuery("SELECT * FROM `t_sports_spt`");
         
       while (resultat.next()) {
-        variable = new Sport((String)resultat.getObject("spt_nom"));
+        variable = new Sport((String)resultat.getObject("spt_nom"),(int)resultat.getInt("spt_id"));
         this.lspts.ajouterSports(variable);
       }
         
@@ -83,10 +83,11 @@ public class JdbcListeSport {
         Statement stmt = LaConnection.getInstance().createStatement();
         resultat = stmt.executeUpdate("INSERT INTO `t_sports_spt`(`spt_id`, `spt_nom`) "
             + "VALUES (null,'" + nom + "');");
+        
        
         if (resultat == 1) {
           ajoutersport = true;
-          Sport a = new Sport(nom);
+          Sport a = new Sport(nom,this.retourneIdSportJdbc(nom));
           this.lspts.ajouterSports(a);
         }
       } catch (SQLException e) {
@@ -97,6 +98,24 @@ public class JdbcListeSport {
     return ajoutersport;
   }
   
+  private int retourneIdSportJdbc(String nom) {
+    int id = -1;
+    
+    try {
+      ResultSet re;
+      Statement stmt = LaConnection.getInstance().createStatement();
+      re = stmt.executeQuery("SELECT * FROM `t_sports_spt` WHERE `spt_nom`=" + nom + ";");
+      
+      while ( re.first() ) {
+        id = re.getInt("spt_id");
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    
+    return id;
+  }
+
   /**
    * Fonction permettant de supprimer un sport.
    * @param sp le sport à supprimer.
@@ -148,6 +167,24 @@ public class JdbcListeSport {
     }
     
     return variable;
+  }
+  
+  public boolean modifierSport(int id, String newNom ) {
+    boolean modifierSport = false;
+    int resultat;
+    try {
+      Statement stmt = LaConnection.getInstance().createStatement();
+      resultat = stmt.executeUpdate("UPDATE `t_sports_spt` SET `spt_nom`=" + newNom + " WHERE `spt_id`=" + id + ";");
+          
+      if (resultat == 1) {
+        modifierSport = true;
+        this.lspts.modifierSport(id, newNom);
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    
+    return modifierSport;
   }
 
 }

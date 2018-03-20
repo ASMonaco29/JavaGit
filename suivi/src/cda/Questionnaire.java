@@ -13,6 +13,23 @@ public class Questionnaire {
   private String messageFin;
   private ArrayList<Question> quListe;
 
+  
+  public Questionnaire() {
+    super();
+  }
+
+  public Questionnaire(int id, String titre, String sstitre, Date dateD, Date dateF, String messageFin,
+      ArrayList<Question> quListe) {
+    super();
+    this.id = id;
+    this.titre = titre;
+    this.sstitre = sstitre;
+    this.dateD = dateD;
+    this.dateF = dateF;
+    this.messageFin = messageFin;
+    this.quListe = quListe;
+  }
+
   /**public Questionnaire(String titre, String sstitre, Date dateD, Date dateF, String messageFin).
    * 
    * @param titre : titre du questionnaire
@@ -192,6 +209,9 @@ public class Questionnaire {
 
   @Override
   public String toString() {
-    return this.titre;
+    return "Questionnaire [id=" + id + ", titre=" + titre + ", sstitre=" + sstitre + ", dateD=" + dateD + ", dateF="
+        + dateF + ", messageFin=" + messageFin + ", quListe=" + quListe + "]";
   }
+
+  
 }

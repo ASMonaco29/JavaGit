@@ -7,17 +7,27 @@ public class Reponse {
   private ArrayList<Boolean> reponses;
   private Sportif sportif;
   private Questionnaire questionnaire;
+  private int id;
   
-  public Reponse(Date date, ArrayList<Boolean> reponses, Sportif sportif, Questionnaire questionnaire) {
+  public Reponse(int id, Date date, ArrayList<Boolean> reponses, Sportif sportif, Questionnaire questionnaire) {
     super();
     this.date = date;
     this.reponses = reponses;
     this.sportif = sportif;
     this.questionnaire = questionnaire;
+    this.id = id;
   }
 
   public Date getDate() {
     return date;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public void setDate(Date date) {
@@ -47,4 +57,11 @@ public class Reponse {
   public void setQuestionnaire(Questionnaire questionnaire) {
     this.questionnaire = questionnaire;
   }
+
+  @Override
+  public String toString() {
+    return "Reponse [date=" + date + ", reponses=" + reponses + ", sportif=" + sportif + ", questionnaire="
+        + questionnaire + ", id=" + id + "]";
+  }
+  
 }

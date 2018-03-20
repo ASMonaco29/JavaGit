@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -32,8 +33,12 @@ import javax.swing.JTable;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.table.TableCellRenderer;
 
+import cda.Question;
+import cda.Questionnaire;
 import cda.Sport;
 import cda.Sportif;
+import jdbc.JdbcListeQuestionnaire;
+import jdbc.JdbcListeReponse;
 import jdbc.JdbcListeSportif;
 import jdbc.LaConnection;
 
@@ -133,18 +138,10 @@ public class Ihm extends JFrame implements ActionListener {
   
   public static void main(String[] args) {
     
-    JdbcListeSportif a = new JdbcListeSportif();
-    a.initialiserListeSportifsJdbc();
+    JdbcListeReponse lr = new JdbcListeReponse();
+    lr.initialiserListeReponsesJdbc();
     
-    
-    Calendar cal = Calendar.getInstance();
-    cal.set(Calendar.YEAR, 2016);
-    cal.set(Calendar.MONTH, 4);
-    cal.set(Calendar.DAY_OF_MONTH, 1);
-    Date date1 = cal.getTime();
-    
-    int inserer = a.ajouterSportifJdbc("malou25alleno", "alleno", "malou", date1 , "MAlouSpodret");
-    System.out.println("C'est "+ inserer +"\n");
+    System.out.println(""+lr.toString());
     
     /** Ihm ihm = new Ihm("Application Sportifs");
     ihm.setVisible(true); **/
