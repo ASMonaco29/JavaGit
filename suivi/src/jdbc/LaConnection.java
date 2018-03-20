@@ -13,9 +13,12 @@ public class LaConnection {
   //Objet Connection
   private static Connection connect;
    
-  //Méthode qui va nous retourner notre instance et la créer si elle n'existe pas
-  public static Connection getInstance(){
-    if(connect == null){
+  /**Méthode qui va nous retourner notre instance et la créer si elle n'existe pas.
+   * 
+   * @return Objet connect.
+   */
+  public static Connection getInstance() {
+    if (connect == null) {
       try {
         connect = DriverManager.getConnection(url, user, passwd);
       } catch (Exception e) {

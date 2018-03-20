@@ -173,13 +173,13 @@ public class JdbcListeReponse {
           + ", rep_daterep = " + r.getDate()
           + " WHERE rep_id = " + r.getId());
       stmt.executeUpdate("DELETE FROM t_reponseschoisies_rpc WHERE rep_id = " + r.getId());
-      for (int i = 0; i < r.getReponses().size() ; i++) {
+      for (int i = 0; i < r.getReponses().size(); i++) {
         if (r.getReponses().get(i)) {
           stmt.executeUpdate("INSERT INTO t_reponseschoisies_rpc (lrp_id, rep_id) "
-              + "VALUES (" + ((i*2)+1) + ", " + r.getId());
+              + "VALUES (" + ((i * 2) + 1) + ", " + r.getId());
         } else {
           stmt.executeUpdate("INSERT INTO t_reponseschoisies_rpc (lrp_id, rep_id) "
-              + "VALUES (" + ((i*2)+1) + ", " + r.getId());
+              + "VALUES (" + ((i * 2) + 1) + ", " + r.getId());
         }
       }
     } catch (Exception e) {
