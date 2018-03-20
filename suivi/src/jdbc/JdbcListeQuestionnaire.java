@@ -153,14 +153,23 @@ public class JdbcListeQuestionnaire {
 
   private boolean ajouterListeQuestionJdbc(Questionnaire q, ArrayList<Question> listq) {
     boolean reussie = false;
+    this.initialiserListeQuestionJdbc();
 
-    for (int i = 0; i<listq.size(); i++) {
+    for (int i = 0; i < listq.size(); i++) {
 
+      boolean ok = true;
       int question;
       String rd;
       Statement stmt;
 
       try {
+
+        for (int j = 0; j < this.lq.size(); i++) {
+          if (this.lq.get(j).equals(listq.get(i))) {
+            ok = false;
+            break;
+          }
+        }
 
         stmt = LaConnection.getInstance().createStatement();
         if (listq.get(i).getChoixDeflt()) {
@@ -402,7 +411,7 @@ public class JdbcListeQuestionnaire {
   public Questionnaire recupererQuestionnaireJdbc(String titre, String sstitre) {
     return this.lqtnrs.retourneQuestionnaire(titre, sstitre);
   }
-  
+
   public ArrayList<Question> recupererQuestionJdbc() {
     return this.lq;
   }
