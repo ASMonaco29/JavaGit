@@ -157,19 +157,11 @@ public class JdbcListeQuestionnaire {
 
     for (int i = 0; i < listq.size(); i++) {
 
-      boolean ok = true;
       int question;
       String rd;
       Statement stmt;
 
       try {
-
-        for (int j = 0; j < this.lq.size(); i++) {
-          if (this.lq.get(j).equals(listq.get(i))) {
-            ok = false;
-            break;
-          }
-        }
 
         stmt = LaConnection.getInstance().createStatement();
         if (listq.get(i).getChoixDeflt()) {
