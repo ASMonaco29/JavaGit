@@ -116,22 +116,39 @@ public class JdbcListeReponse {
   /**
    * Fonction permettent de supprimer un réponse à la bdd
    */
-  public void supprimerReponseJdbc(Sportif s, Questionnaire q, java.util.Date date) {
+  public int supprimerReponseJdbc(Sportif s, Questionnaire q, java.util.Date date) {
     Reponse r = retourneReponseJdbc(s, q, date);
     this.lrps.supprimerReponse(r);
     try {
       Statement stmt = LaConnection.getInstance().createStatement();
-      
+      stmt.executeUpdate("DELETE FROM t_reponse_rep WHERE"
+          + "rep_id = " + r.getId());
+      return 0;
     } catch (Exception e) {
       // TODO: handle exception
+      e.printStackTrace();
     }
+    return -1;
   }
 
   /**
    * Fonction permettent de supprimer un réponse à la bdd
    */
-  public void supprimerToutesReponsesJdbc() {
-
+  public int supprimerToutesReponsesJdbc(Questionnaire q) {
+    for(int i = 0; i < this.lrps.getSizeListR(); i++) {
+      if (this.lrps.getReponses().get(i).getQuestionnaire().getId() == q.getId()) {
+        this.lrps.supprimerReponse(this.lrps.getReponses().get(i));
+      }
+    }
+    try {
+      Statement stmt = LaConnection.getInstance().createStatement();
+      stmt.executeUpdate("DELETE FROM t_reponse_rep WHERE que_id = " + q.getId());
+      return 0;
+    } catch (Exception e) {
+      // TODO: handle exception
+      e.printStackTrace();
+    }
+    return -1;
   }
 
   @Override

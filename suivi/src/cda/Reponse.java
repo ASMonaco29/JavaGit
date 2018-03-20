@@ -7,7 +7,7 @@ public class Reponse {
   private ArrayList<Boolean> reponses;
   private Sportif sportif;
   private Questionnaire questionnaire;
-  private int id;
+  private int id = 0;
   
   public Reponse(int id, Date date, ArrayList<Boolean> reponses, Sportif sportif, Questionnaire questionnaire) {
     super();
@@ -16,6 +16,14 @@ public class Reponse {
     this.sportif = sportif;
     this.questionnaire = questionnaire;
     this.id = id;
+  }
+  
+  public Reponse(Date date, ArrayList<Boolean> reponses, Sportif sportif, Questionnaire questionnaire) {
+    super();
+    this.date = date;
+    this.reponses = reponses;
+    this.sportif = sportif;
+    this.questionnaire = questionnaire;
   }
 
   public Date getDate() {
