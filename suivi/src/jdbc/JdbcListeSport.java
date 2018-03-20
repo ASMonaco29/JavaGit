@@ -106,7 +106,7 @@ public class JdbcListeSport {
       Statement stmt = LaConnection.getInstance().createStatement();
       re = stmt.executeQuery("SELECT * FROM `t_sports_spt` WHERE `spt_nom`=" + nom + ";");
       
-      while ( re.first() ) {
+      while (re.first()) {
         id = re.getInt("spt_id");
       }
     } catch (SQLException e) {
@@ -148,6 +148,11 @@ public class JdbcListeSport {
     return supprimerSportJdbc(a);
   }
   
+  /** Retourne l'identifiant d'un sport.
+   * 
+   * @param nom : nom du sport dont on veut l'identifiant.
+   * @return : identifiant du sport.
+   */
   public int retourneIdSport(String nom) {
     int variable = -1;
     
@@ -155,7 +160,8 @@ public class JdbcListeSport {
     try {
       ResultSet resultat;
       Statement stmt = LaConnection.getInstance().createStatement();
-      resultat = stmt.executeQuery("SELECT * FROM `t_sports_spt` WHERE `spt_nom` = '" + nom + "' ;");
+      resultat = stmt.executeQuery("SELECT * FROM `t_sports_spt` "
+          + "WHERE `spt_nom` = '" + nom + "' ;");
         
       while (resultat.next()) {
         variable = (int)resultat.getObject("spt_id");
@@ -169,12 +175,19 @@ public class JdbcListeSport {
     return variable;
   }
   
-  public boolean modifierSport(int id, String newNom ) {
+  /** Modifie un sport dans la BDD.
+   * 
+   * @param id : identifiant du sport à modifier.
+   * @param newNom : nouveau nom du sport.
+   * @return : true en cas de succès, false sinon.
+   */
+  public boolean modifierSport(int id, String newNom) {
     boolean modifierSport = false;
     int resultat;
     try {
       Statement stmt = LaConnection.getInstance().createStatement();
-      resultat = stmt.executeUpdate("UPDATE `t_sports_spt` SET `spt_nom`=" + newNom + " WHERE `spt_id`=" + id + ";");
+      resultat = stmt.executeUpdate("UPDATE `t_sports_spt` SET `spt_nom`=" + newNom 
+          + " WHERE `spt_id`=" + id + ";");
           
       if (resultat == 1) {
         modifierSport = true;

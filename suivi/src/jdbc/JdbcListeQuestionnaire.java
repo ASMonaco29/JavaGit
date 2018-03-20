@@ -1,21 +1,23 @@
 package jdbc;
 
+import cda.ListeQuestionnaires;
+import cda.Question;
+import cda.Questionnaire;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 
-import cda.ListeQuestionnaires;
-import cda.Question;
-import cda.Questionnaire;
-
 public class JdbcListeQuestionnaire {
 
   private ListeQuestionnaires lqtnrs;
   private ArrayList<Question> lq;
 
-
+  /** Constructeur.
+   * 
+   */
   public JdbcListeQuestionnaire() {
     super();
     this.lqtnrs = new ListeQuestionnaires();
@@ -26,6 +28,9 @@ public class JdbcListeQuestionnaire {
     return lqtnrs;
   }
 
+  /** Initialise la liste de questionnaires avec les nouvelles données de la BDD.
+   * 
+   */
   public void initialiserListeQuestionnaireJdbc() {
     this.lqtnrs.reinitialiser();
 
@@ -66,8 +71,8 @@ public class JdbcListeQuestionnaire {
 
           while (reponse.next()) {
 
-            if( r == reponse.getInt("lrp_id")) {
-              if(reponse.getString("lrp_intitule").equals("oui")) {
+            if (r == reponse.getInt("lrp_id")) {
+              if (reponse.getString("lrp_intitule").equals("oui")) {
                 qtn.setChoixDeflt(true);
               } else {
                 qtn.setChoixDeflt(false);
@@ -89,6 +94,16 @@ public class JdbcListeQuestionnaire {
     this.lq.clear();
   }
 
+  /** Ajoute/insert un questionnaire dans la BDD.
+   * 
+   * @param titre : titre du nouveau Questionnaire.
+   * @param sstitre : sstitre du nouveau Questionnaire.
+   * @param dateD : date de début du nouveau Questionnaire.
+   * @param dateF : date de fin du nouveau Questionnaire.
+   * @param messageF : message de fin du nouveau Questionnaire.
+   * @param listq : questions du nouveau Questionnaire.
+   * @return : objet Questionnaire résultant de la création à partir des paramètres.
+   */
   public Questionnaire ajouterQuestionnaireJdbc(String titre, String sstitre, Date dateD,
       Date dateF, String messageF, ArrayList<Question> listq) {
 
@@ -118,7 +133,7 @@ public class JdbcListeQuestionnaire {
           idQuestionnaire = this.recupererIdQuestionnaireJdbc(quest);
           quest.setId(idQuestionnaire);
 
-          if ( this.ajouterListeQuestionJdbc(quest, listq) == true ) {
+          if (this.ajouterListeQuestionJdbc(quest, listq) == true) {
 
             this.lqtnrs.addQuestionnaire(quest);
             return quest;
@@ -149,7 +164,8 @@ public class JdbcListeQuestionnaire {
 
         stmt = LaConnection.getInstance().createStatement();
         question = stmt.executeUpdate("INSERT INTO `t_question_qtn`"
-            + "(`qtn_intitule`, `que_id`, `qtn_id`) VALUES ('" + quest.getQuestion() +"'," + q.getId() + "," + null + ");");
+            + "(`qtn_intitule`, `que_id`, `qtn_id`) VALUES ('" + quest.getQuestion()
+            + "'," + q.getId() + "," + null + ");");
 
         if (question == 1) {
           Statement stmt2 = LaConnection.getInstance().createStatement();
@@ -188,7 +204,7 @@ public class JdbcListeQuestionnaire {
               Statement stmt5 = LaConnection.getInstance().createStatement();
               ResultSet rs5 = stmt5.executeQuery("SELECT * FROM `t_listreponses_lrp` "
                   + "WHERE `lrp_intitule` = '" + quest.getChoixDeflt() 
-                  + "' AND `qtn_id`= " + questid );
+                  + "' AND `qtn_id`= " + questid);
 
               if (rs5.first()) {
                 int sss = rs5.getInt("lrp_id");
@@ -241,6 +257,11 @@ public class JdbcListeQuestionnaire {
     return this.supprimerQuestionnaire(q);  
   }
 
+  /** Supprime un Questionnaire de la BDD.
+   * 
+   * @param q : Questionnaire à supprimer.
+   * @return : 0 en cas de succès, -1 sinon.
+   */
   public int supprimerQuestionnaire(Questionnaire q) {
 
     if (this.lqtnrs.supprQuestionnaire(q) == 0) {
@@ -249,7 +270,7 @@ public class JdbcListeQuestionnaire {
         ResultSet rs = stmt.executeQuery("SELECT * FROM `t_question_qtn` "
             + "WHERE `que_id` = " + q.getId() + ";");
 
-        while(rs.next()) {
+        while (rs.next()) {
           int idQuestion = rs.getInt("qtn_id");
           Statement stmt2 = LaConnection.getInstance().createStatement();
           stmt2.executeUpdate("DELETE FROM `t_listreponses_lrp` "
@@ -272,6 +293,10 @@ public class JdbcListeQuestionnaire {
     return -1;
   }
 
+  /** Modifie un Questionnaire dans la BDD.
+   * 
+   * @param q : objet Questionnaire contenant les nouvelles valeurs.
+   */
   public void modifierQuestionnaire(Questionnaire q) {
     if (this.lqtnrs.modifQuestionnaire(q) == 0) {
 
@@ -330,6 +355,9 @@ public class JdbcListeQuestionnaire {
     }
   }
 
+  /** Récupère toutes les questions dans la BDD et les stocke dans l'attribut lq.
+   * 
+   */
   public void recupererToutesQuestionsJdbc() {
     Question qtn;
     try {
@@ -349,8 +377,8 @@ public class JdbcListeQuestionnaire {
 
         while (reponse.next()) {
 
-          if( r == reponse.getInt("lrp_id")) {
-            if(reponse.getString("lrp_intitule").equals("oui")) {
+          if (r == reponse.getInt("lrp_id")) {
+            if (reponse.getString("lrp_intitule").equals("oui")) {
               qtn.setChoixDeflt(true);
             } else {
               qtn.setChoixDeflt(false);

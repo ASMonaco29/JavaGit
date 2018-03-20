@@ -1,5 +1,10 @@
 package jdbc;
 
+import cda.ListeReponses;
+import cda.Questionnaire;
+import cda.Reponse;
+import cda.Sportif;
+
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,16 +12,14 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 
-import cda.ListeReponses;
-import cda.Questionnaire;
-import cda.Reponse;
-import cda.Sportif;
-
 public class JdbcListeReponse {
   private ListeReponses lrps;
   private JdbcListeSportif lspts;
   private JdbcListeQuestionnaire lqtnrs;
 
+  /** Constructeur.
+   * 
+   */
   public JdbcListeReponse() {
     super();
     this.lrps = new ListeReponses();
@@ -28,6 +31,9 @@ public class JdbcListeReponse {
     return lrps;
   }
 
+  /** Initialise les attributs avec les nouvelles valeurs de la BDD.
+   * 
+   */
   public void initialiserListeReponsesJdbc() {
     this.lrps.reinitialiser();
     this.lspts.initialiserListeSportifsJdbc();
@@ -38,7 +44,8 @@ public class JdbcListeReponse {
       ResultSet resultat;
       Reponse variable;
       Statement stmt = LaConnection.getInstance().createStatement();
-      resultat = stmt.executeQuery("SELECT * FROM `t_reponses_rep` NATURAL JOIN `t_questionnaire_que`;");
+      resultat = stmt.executeQuery("SELECT * FROM `t_reponses_rep` "
+          + "NATURAL JOIN `t_questionnaire_que`;");
 
       while (resultat.next()) {
         Sportif s = this.lspts.retourneSportifJdbc((String)resultat.getObject("spo_pseudo"));
@@ -56,9 +63,9 @@ public class JdbcListeReponse {
         while (result.next()) {
           boolean rep = false;
           String str = result.getString("lrp_intitule");
-          if( str.equals("oui")) {
+          if (str.equals("oui")) {
             rep = true;
-          }else {
+          } else {
             rep = false;
           }
           reponses.add(rep);
@@ -75,26 +82,26 @@ public class JdbcListeReponse {
     }
   }
 
-  /**
-   * Fonction permettent d'ajouter une reponse
-   * @return
+  /** Fonction permettent d'ajouter une reponse.
    */
   public void ajouterReponseJdbc(Reponse r) {
     this.ajouterReponseJdbc(r.getSportif(), r.getQuestionnaire(), r.getDate(), r.getReponses());
   }
 
-  /**
-   * Fonction permettent d'ajouter une reponse
-   * @return
+  /** Fonction permettent d'ajouter une reponse.
+   * @return ajouterreponse : true la reponse à été ajoutée avec succès, false sinon
    */
-  public boolean ajouterReponseJdbc(Sportif s, Questionnaire q, java.util.Date date, ArrayList<Boolean> rep) {
+  public boolean ajouterReponseJdbc(Sportif s, Questionnaire q, java.util.Date date,
+      ArrayList<Boolean> rep) {
     boolean ajouterreponse = false;
 
     if (this.retourneReponseJdbc(s,q,date) == null) {
       try {
         int resultat;
         Statement stmt = LaConnection.getInstance().createStatement();
-        resultat = stmt.executeUpdate("INSERT INTO `t_reponses_rep`(`rep_id`, `rep_daterep`, `spo_pseudo`, `que_id`) VALUES ( null," + date + "," + s + "," + q + ")");
+        resultat = stmt.executeUpdate("INSERT INTO `t_reponses_rep`"
+            + "(`rep_daterep`, `spo_pseudo`, `que_id`)"
+            + " VALUES ( " + date + "," + s + "," + q.getId() + ")");
 
         if (resultat == 1) {
           ajouterreponse = true;
@@ -112,12 +119,12 @@ public class JdbcListeReponse {
     return this.lrps.retourneReponse(s,q,date);
   }
 
+  @SuppressWarnings("unused")
   private Reponse retourneReponsesSportifJdbc(Sportif s) {
     return this.lrps.retourneReponsesSportif(s);
   }
 
-  /**
-   * Fonction permettent de supprimer un réponse à la bdd
+  /** Fonction permettent de supprimer un réponse à la bdd.
    */
   public int supprimerReponseJdbc(Sportif s, Questionnaire q, java.util.Date date) {
     Reponse r = retourneReponseJdbc(s, q, date);
@@ -134,11 +141,10 @@ public class JdbcListeReponse {
     return -1;
   }
 
-  /**
-   * Fonction permettent de supprimer un réponse à la bdd
+  /** Fonction permettent de supprimer un réponse à la bdd.
    */
   public int supprimerToutesReponsesJdbc(Questionnaire q) {
-    for(int i = 0; i < this.lrps.getSizeListR(); i++) {
+    for (int i = 0; i < this.lrps.getSizeListR(); i++) {
       if (this.lrps.getReponses().get(i).getQuestionnaire().getId() == q.getId()) {
         this.lrps.supprimerReponse(this.lrps.getReponses().get(i));
       }
@@ -154,7 +160,11 @@ public class JdbcListeReponse {
     return -1;
   }
   
-  public void modififerReponsesJDBC(Reponse r) {
+  /** Modifie une reponse dans la BDD.
+   * 
+   * @param r : Objet Reponse contenant les nouvelles valeurs
+   */
+  public void modififerReponsesJdbc(Reponse r) {
     try {
       Statement stmt = LaConnection.getInstance().createStatement();
       stmt.executeUpdate("UPDATE t_reponse_rep SET"
